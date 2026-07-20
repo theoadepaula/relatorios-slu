@@ -1,0 +1,747 @@
+﻿ano;atividade_id;atividade_rotulo;unidade;valor;relatorio_fonte
+2014;animais_mortos;Coleta de animais mortos;unidade;4481.0;2016
+2015;animais_mortos;Coleta de animais mortos;unidade;2952.0;2016
+2015;animais_mortos;Coleta de animais mortos;unidade;2952.0;2017
+2015;animais_mortos;Coleta de animais mortos;unidade;2952.0;2018
+2016;animais_mortos;Coleta de animais mortos;unidade;3281.0;2016
+2016;animais_mortos;Coleta de animais mortos;unidade;3281.0;2017
+2016;animais_mortos;Coleta de animais mortos;unidade;3281.0;2018
+2017;animais_mortos;Coleta de animais mortos;unidade;2920.0;2017
+2017;animais_mortos;Coleta de animais mortos;unidade;2920.0;2018
+2017;animais_mortos;Coleta de animais mortos;unidade;2920.0;2019
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2020
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2021
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2022
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2023
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2024
+2017;animais_mortos;Coleta de animais mortos;t;63.06;2025
+2018;animais_mortos;Coleta de animais mortos;unidade;3011.0;2018
+2018;animais_mortos;Coleta de animais mortos;unidade;3011.0;2019
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2020
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2021
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2022
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2023
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2024
+2018;animais_mortos;Coleta de animais mortos;t;83.0;2025
+2019;animais_mortos;Coleta de animais mortos;unidade;2181.0;2019
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2020
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2021
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2022
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2023
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2024
+2019;animais_mortos;Coleta de animais mortos;t;76.18;2025
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2020
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2021
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2022
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2023
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2024
+2020;animais_mortos;Coleta de animais mortos;t;65.84;2025
+2021;animais_mortos;Coleta de animais mortos;t;76.82;2021
+2021;animais_mortos;Coleta de animais mortos;t;76.82;2022
+2021;animais_mortos;Coleta de animais mortos;t;76.82;2023
+2021;animais_mortos;Coleta de animais mortos;t;76.82;2024
+2021;animais_mortos;Coleta de animais mortos;t;76.82;2025
+2022;animais_mortos;Coleta de animais mortos;t;79.95;2022
+2022;animais_mortos;Coleta de animais mortos;t;79.95;2023
+2022;animais_mortos;Coleta de animais mortos;t;79.95;2024
+2022;animais_mortos;Coleta de animais mortos;t;79.95;2025
+2023;animais_mortos;Coleta de animais mortos;t;64.82;2023
+2023;animais_mortos;Coleta de animais mortos;t;64.82;2024
+2023;animais_mortos;Coleta de animais mortos;t;64.82;2025
+2024;animais_mortos;Coleta de animais mortos;t;69.69;2024
+2024;animais_mortos;Coleta de animais mortos;t;69.69;2025
+2025;animais_mortos;Coleta de animais mortos;t;69.54;2025
+2017;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;252703.0;2022
+2017;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;252703.0;2023
+2017;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;252703.0;2024
+2017;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;252703.0;2025
+2018;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;749608.0;2022
+2018;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;749608.0;2023
+2018;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;749608.0;2024
+2018;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;749608.0;2025
+2019;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;800872.0;2022
+2019;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;800872.0;2023
+2019;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;800872.0;2024
+2019;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;800872.0;2025
+2020;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;821089.0;2022
+2020;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;821089.0;2023
+2020;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;821089.0;2024
+2020;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;821089.0;2025
+2021;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;760763.0;2022
+2021;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;760763.0;2023
+2021;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;760763.0;2024
+2021;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;760763.0;2025
+2022;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;718554.0;2022
+2022;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;718554.0;2023
+2022;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;718554.0;2024
+2022;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;718554.0;2025
+2023;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;743776.0;2023
+2023;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;743776.0;2024
+2023;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;743776.0;2025
+2024;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;761311.0;2024
+2024;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;761311.0;2025
+2025;aterrado_asb;Resíduos aterrados no Aterro Sanitário de Brasília;t;773093.0;2025
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2020
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2021
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2022
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2023
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2024
+2020;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;107.25;2025
+2021;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;97.67;2021
+2021;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;97.67;2022
+2021;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;97.67;2023
+2021;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;97.67;2024
+2021;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;97.67;2025
+2022;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.42;2022
+2022;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.42;2023
+2022;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.42;2024
+2022;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.42;2025
+2023;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;84.83;2023
+2023;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;84.83;2024
+2023;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;84.83;2025
+2024;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.84;2024
+2024;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;81.84;2025
+2025;caixa_gordura;Resíduos de caixa de gordura / pós-eventos;t;79.33;2025
+2017;catacao_papel;Catação de papel em áreas verdes;equipe;363.7;2019
+2017;catacao_papel;Catação de papel em áreas verdes;equipe;363.7;2020
+2017;catacao_papel;Catação de papel em áreas verdes;equipe;363.7;2021
+2017;catacao_papel;Catação de papel em áreas verdes;equipe;363.7;2022
+2017;catacao_papel;Catação de papel em áreas verdes;equipe;363.7;2023
+2018;catacao_papel;Catação de papel em áreas verdes;equipe;414.64;2019
+2018;catacao_papel;Catação de papel em áreas verdes;equipe;414.64;2020
+2018;catacao_papel;Catação de papel em áreas verdes;equipe;414.64;2021
+2018;catacao_papel;Catação de papel em áreas verdes;equipe;414.64;2022
+2018;catacao_papel;Catação de papel em áreas verdes;equipe;414.64;2023
+2019;catacao_papel;Catação de papel em áreas verdes;equipe;411.99;2019
+2019;catacao_papel;Catação de papel em áreas verdes;equipe;411.99;2020
+2019;catacao_papel;Catação de papel em áreas verdes;equipe;411.99;2021
+2019;catacao_papel;Catação de papel em áreas verdes;equipe;411.99;2022
+2019;catacao_papel;Catação de papel em áreas verdes;equipe;411.99;2023
+2020;catacao_papel;Catação de papel em áreas verdes;equipe;323.8;2020
+2020;catacao_papel;Catação de papel em áreas verdes;equipe;323.8;2021
+2020;catacao_papel;Catação de papel em áreas verdes;equipe;323.8;2022
+2020;catacao_papel;Catação de papel em áreas verdes;equipe;323.8;2023
+2021;catacao_papel;Catação de papel em áreas verdes;equipe;97.67;2021
+2021;catacao_papel;Catação de papel em áreas verdes;equipe;97.67;2022
+2021;catacao_papel;Catação de papel em áreas verdes;equipe;97.67;2023
+2022;catacao_papel;Catação de papel em áreas verdes;equipe;81.42;2022
+2022;catacao_papel;Catação de papel em áreas verdes;equipe;81.42;2023
+2023;catacao_papel;Catação de papel em áreas verdes;equipe;84.83;2023
+2014;catacao_residuos;Catação de resíduos;ha;190573.0;2016
+2015;catacao_residuos;Catação de resíduos;ha;143878.0;2016
+2015;catacao_residuos;Catação de resíduos;ha;143878.0;2017
+2015;catacao_residuos;Catação de resíduos;ha;143878.0;2018
+2016;catacao_residuos;Catação de resíduos;ha;150975.0;2016
+2016;catacao_residuos;Catação de resíduos;ha;150975.0;2017
+2016;catacao_residuos;Catação de resíduos;ha;150975.0;2018
+2017;catacao_residuos;Catação de resíduos;ha;187268.0;2017
+2017;catacao_residuos;Catação de resíduos;ha;187268.0;2018
+2018;catacao_residuos;Catação de resíduos;ha;214456.0;2018
+2014;coleta_corretiva;Coleta de remoção (corretiva);t;741750.0;2016
+2015;coleta_corretiva;Coleta de remoção (corretiva);t;706855.0;2016
+2015;coleta_corretiva;Coleta de remoção (corretiva);t;706855.0;2017
+2015;coleta_corretiva;Coleta de remoção (corretiva);t;706855.0;2018
+2016;coleta_corretiva;Coleta de remoção (corretiva);t;772268.0;2016
+2016;coleta_corretiva;Coleta de remoção (corretiva);t;772268.0;2017
+2016;coleta_corretiva;Coleta de remoção (corretiva);t;772268.0;2018
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2017
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2018
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2019
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2020
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2021
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2022
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2023
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2024
+2017;coleta_corretiva;Coleta de remoção (corretiva);t;636005.0;2025
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;437094.0;2018
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2019
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2020
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2021
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2022
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2023
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2024
+2018;coleta_corretiva;Coleta de remoção (corretiva);t;438079.0;2025
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2019
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2020
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2021
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2022
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2023
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2024
+2019;coleta_corretiva;Coleta de remoção (corretiva);t;425175.0;2025
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2020
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2021
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2022
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2023
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2024
+2020;coleta_corretiva;Coleta de remoção (corretiva);t;615760.8;2025
+2021;coleta_corretiva;Coleta de remoção (corretiva);t;612086.0;2021
+2021;coleta_corretiva;Coleta de remoção (corretiva);t;612086.0;2022
+2021;coleta_corretiva;Coleta de remoção (corretiva);t;612086.0;2023
+2021;coleta_corretiva;Coleta de remoção (corretiva);t;612086.0;2024
+2021;coleta_corretiva;Coleta de remoção (corretiva);t;612086.0;2025
+2022;coleta_corretiva;Coleta de remoção (corretiva);t;600048.4;2022
+2022;coleta_corretiva;Coleta de remoção (corretiva);t;600048.4;2023
+2022;coleta_corretiva;Coleta de remoção (corretiva);t;600048.4;2024
+2022;coleta_corretiva;Coleta de remoção (corretiva);t;600048.4;2025
+2023;coleta_corretiva;Coleta de remoção (corretiva);t;651290.0;2023
+2023;coleta_corretiva;Coleta de remoção (corretiva);t;651290.0;2024
+2023;coleta_corretiva;Coleta de remoção (corretiva);t;651290.0;2025
+2024;coleta_corretiva;Coleta de remoção (corretiva);t;653934.6;2024
+2024;coleta_corretiva;Coleta de remoção (corretiva);t;653934.6;2025
+2025;coleta_corretiva;Coleta de remoção (corretiva);t;678075.0;2025
+2014;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;844186.0;2016
+2015;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;843217.0;2016
+2015;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;843217.0;2017
+2015;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;843217.0;2018
+2016;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;818771.0;2016
+2016;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;818771.0;2017
+2016;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;818771.0;2018
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;829229.0;2017
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2018
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2019
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2020
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2021
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2022
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2023
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2024
+2017;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;828765.0;2025
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2018
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2019
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2020
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2021
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2022
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2023
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2024
+2018;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;800685.0;2025
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2019
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2020
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2021
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2022
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2023
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2024
+2019;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;782125.0;2025
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2020
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2021
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2022
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2023
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2024
+2020;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;786122.0;2025
+2021;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;729082.72;2021
+2021;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;729082.7;2022
+2021;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;729082.7;2023
+2021;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;729082.7;2024
+2021;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;729082.7;2025
+2022;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;696995.94;2022
+2022;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;696995.94;2023
+2022;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;696995.94;2024
+2022;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;696995.94;2025
+2023;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;710679.23;2023
+2023;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;710679.23;2024
+2023;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;710679.23;2025
+2024;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;730174.41;2024
+2024;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;730174.41;2025
+2025;coleta_domiciliar_comercial;Coleta domiciliar e comercial;t;724393.0;2025
+2014;coleta_rss;Coleta de resíduos de serviços de saúde;t;2800.0;2016
+2015;coleta_rss;Coleta de resíduos de serviços de saúde;t;2466.0;2016
+2015;coleta_rss;Coleta de resíduos de serviços de saúde;t;2466.0;2017
+2015;coleta_rss;Coleta de resíduos de serviços de saúde;t;2466.0;2018
+2016;coleta_rss;Coleta de resíduos de serviços de saúde;t;2217.0;2016
+2016;coleta_rss;Coleta de resíduos de serviços de saúde;t;2217.0;2017
+2016;coleta_rss;Coleta de resíduos de serviços de saúde;t;2217.0;2018
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2017
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2018
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2019
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2020
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2021
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2022
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2023
+2017;coleta_rss;Coleta de resíduos de serviços de saúde;t;2165.0;2024
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2018
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2019
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2020
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2021
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2022
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2023
+2018;coleta_rss;Coleta de resíduos de serviços de saúde;t;2417.0;2024
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2019
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2020
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2021
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2022
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2023
+2019;coleta_rss;Coleta de resíduos de serviços de saúde;t;2513.0;2024
+2020;coleta_rss;Coleta de resíduos de serviços de saúde;t;3130.2;2020
+2020;coleta_rss;Coleta de resíduos de serviços de saúde;t;3130.2;2021
+2020;coleta_rss;Coleta de resíduos de serviços de saúde;t;3130.2;2022
+2020;coleta_rss;Coleta de resíduos de serviços de saúde;t;3130.2;2023
+2020;coleta_rss;Coleta de resíduos de serviços de saúde;t;3130.2;2024
+2021;coleta_rss;Coleta de resíduos de serviços de saúde;t;506.8;2021
+2021;coleta_rss;Coleta de resíduos de serviços de saúde;t;506.8;2022
+2021;coleta_rss;Coleta de resíduos de serviços de saúde;t;506.8;2023
+2021;coleta_rss;Coleta de resíduos de serviços de saúde;t;506.8;2024
+2014;coleta_seletiva;Coleta seletiva;t;48586.0;2016
+2015;coleta_seletiva;Coleta seletiva;t;57496.0;2016
+2015;coleta_seletiva;Coleta seletiva;t;57496.0;2017
+2015;coleta_seletiva;Coleta seletiva;t;57496.0;2018
+2016;coleta_seletiva;Coleta seletiva;t;48673.0;2016
+2016;coleta_seletiva;Coleta seletiva;t;48673.0;2017
+2016;coleta_seletiva;Coleta seletiva;t;48673.0;2018
+2017;coleta_seletiva;Coleta seletiva;t;29970.0;2017
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2018
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2019
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2020
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2021
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2022
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2023
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2024
+2017;coleta_seletiva;Coleta seletiva;t;29968.0;2025
+2018;coleta_seletiva;Coleta seletiva;t;28945.0;2018
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2019
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2020
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2021
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2022
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2023
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2024
+2018;coleta_seletiva;Coleta seletiva;t;28549.0;2025
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2019
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2020
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2021
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2022
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2023
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2024
+2019;coleta_seletiva;Coleta seletiva;t;28522.0;2025
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2020
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2021
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2022
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2023
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2024
+2020;coleta_seletiva;Coleta seletiva;t;18311.03;2025
+2021;coleta_seletiva;Coleta seletiva;t;31865.72;2021
+2021;coleta_seletiva;Coleta seletiva;t;31865.72;2022
+2021;coleta_seletiva;Coleta seletiva;t;31865.72;2023
+2021;coleta_seletiva;Coleta seletiva;t;31865.72;2024
+2021;coleta_seletiva;Coleta seletiva;t;31865.72;2025
+2022;coleta_seletiva;Coleta seletiva;t;33761.43;2022
+2022;coleta_seletiva;Coleta seletiva;t;33761.43;2023
+2022;coleta_seletiva;Coleta seletiva;t;33761.43;2024
+2022;coleta_seletiva;Coleta seletiva;t;33761.43;2025
+2023;coleta_seletiva;Coleta seletiva;t;44681.4;2023
+2023;coleta_seletiva;Coleta seletiva;t;44681.4;2024
+2023;coleta_seletiva;Coleta seletiva;t;44681.4;2025
+2024;coleta_seletiva;Coleta seletiva;t;48852.75;2024
+2024;coleta_seletiva;Coleta seletiva;t;48852.75;2025
+2025;coleta_seletiva;Coleta seletiva;t;54549.0;2025
+2014;domiciliar_aterrado;Resíduos domiciliares aterrados;t;856571.0;2016
+2015;domiciliar_aterrado;Resíduos domiciliares aterrados;t;887220.0;2016
+2015;domiciliar_aterrado;Resíduos domiciliares aterrados;t;887220.0;2017
+2015;domiciliar_aterrado;Resíduos domiciliares aterrados;t;887220.0;2018
+2016;domiciliar_aterrado;Resíduos domiciliares aterrados;t;830055.0;2016
+2016;domiciliar_aterrado;Resíduos domiciliares aterrados;t;830055.0;2017
+2016;domiciliar_aterrado;Resíduos domiciliares aterrados;t;830055.0;2018
+2017;domiciliar_aterrado;Resíduos domiciliares aterrados;t;810339.0;2017
+2017;domiciliar_aterrado;Resíduos domiciliares aterrados;t;809085.0;2018
+2017;domiciliar_aterrado;Resíduos domiciliares aterrados;t;809085.0;2019
+2017;domiciliar_aterrado;Resíduos domiciliares aterrados;t;809085.0;2020
+2017;domiciliar_aterrado;Resíduos domiciliares aterrados;t;809085.0;2021
+2018;domiciliar_aterrado;Resíduos domiciliares aterrados;t;784460.0;2018
+2018;domiciliar_aterrado;Resíduos domiciliares aterrados;t;784460.0;2019
+2018;domiciliar_aterrado;Resíduos domiciliares aterrados;t;784460.0;2020
+2018;domiciliar_aterrado;Resíduos domiciliares aterrados;t;784460.0;2021
+2019;domiciliar_aterrado;Resíduos domiciliares aterrados;t;800872.0;2019
+2019;domiciliar_aterrado;Resíduos domiciliares aterrados;t;800872.0;2020
+2019;domiciliar_aterrado;Resíduos domiciliares aterrados;t;800872.0;2021
+2020;domiciliar_aterrado;Resíduos domiciliares aterrados;t;821090.0;2020
+2020;domiciliar_aterrado;Resíduos domiciliares aterrados;t;821090.0;2021
+2021;domiciliar_aterrado;Resíduos domiciliares aterrados;t;760781.0;2021
+2017;entulho_pev;Retirada de entulho dos PEVs;equipe;0.0;2019
+2018;entulho_pev;Retirada de entulho dos PEVs;equipe;4.916;2019
+2018;entulho_pev;Retirada de entulho dos PEVs;equipe;4.916;2020
+2018;entulho_pev;Retirada de entulho dos PEVs;equipe;4.916;2021
+2018;entulho_pev;Retirada de entulho dos PEVs;equipe;4.916;2022
+2018;entulho_pev;Retirada de entulho dos PEVs;equipe;4.916;2023
+2019;entulho_pev;Retirada de entulho dos PEVs;equipe;17.89;2019
+2019;entulho_pev;Retirada de entulho dos PEVs;equipe;17.89;2020
+2019;entulho_pev;Retirada de entulho dos PEVs;equipe;17.89;2021
+2019;entulho_pev;Retirada de entulho dos PEVs;equipe;17.89;2022
+2019;entulho_pev;Retirada de entulho dos PEVs;equipe;17.89;2023
+2020;entulho_pev;Retirada de entulho dos PEVs;equipe;54.88;2020
+2020;entulho_pev;Retirada de entulho dos PEVs;equipe;54.88;2021
+2020;entulho_pev;Retirada de entulho dos PEVs;equipe;54.88;2022
+2020;entulho_pev;Retirada de entulho dos PEVs;equipe;54.88;2023
+2021;entulho_pev;Retirada de entulho dos PEVs;equipe;59.88;2021
+2021;entulho_pev;Retirada de entulho dos PEVs;equipe;59.88;2022
+2021;entulho_pev;Retirada de entulho dos PEVs;equipe;59.88;2023
+2022;entulho_pev;Retirada de entulho dos PEVs;equipe;65.65;2022
+2022;entulho_pev;Retirada de entulho dos PEVs;equipe;65.65;2023
+2023;entulho_pev;Retirada de entulho dos PEVs;equipe;65.65;2023
+2017;entulho_ure;Entulho aterrado na URE;t;0.0;2019
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2019
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2020
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2021
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2022
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2023
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2024
+2018;entulho_ure;Entulho aterrado na URE;t;1303662.0;2025
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2019
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2020
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2021
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2022
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2023
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2024
+2019;entulho_ure;Entulho aterrado na URE;t;1423028.0;2025
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2020
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2021
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2022
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2023
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2024
+2020;entulho_ure;Entulho aterrado na URE;t;1589393.18;2025
+2021;entulho_ure;Entulho aterrado na URE;t;1466145.31;2021
+2021;entulho_ure;Entulho aterrado na URE;t;1466145.31;2022
+2021;entulho_ure;Entulho aterrado na URE;t;1466145.31;2023
+2021;entulho_ure;Entulho aterrado na URE;t;1466145.31;2024
+2021;entulho_ure;Entulho aterrado na URE;t;1466145.31;2025
+2022;entulho_ure;Entulho aterrado na URE;t;1485844.51;2022
+2022;entulho_ure;Entulho aterrado na URE;t;1485844.51;2023
+2022;entulho_ure;Entulho aterrado na URE;t;1485844.51;2024
+2022;entulho_ure;Entulho aterrado na URE;t;1485844.51;2025
+2023;entulho_ure;Entulho aterrado na URE;t;1507223.8;2023
+2023;entulho_ure;Entulho aterrado na URE;t;1507223.8;2024
+2023;entulho_ure;Entulho aterrado na URE;t;1507223.8;2025
+2024;entulho_ure;Entulho aterrado na URE;t;1599445.58;2024
+2024;entulho_ure;Entulho aterrado na URE;t;1599445.58;2025
+2025;entulho_ure;Entulho aterrado na URE;t;1450659.0;2025
+2014;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;119071.0;2016
+2015;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;65311.0;2016
+2015;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;65311.0;2017
+2015;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;65311.0;2018
+2016;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;42791.0;2016
+2016;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;42791.0;2017
+2016;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;42791.0;2018
+2017;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;71235.0;2017
+2017;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;71235.0;2018
+2017;lavagem_abrigos;Lavagem de abrigos de passageiros;equipe;35.13;2019
+2018;lavagem_abrigos;Lavagem de abrigos de passageiros;unidade;84279.0;2018
+2018;lavagem_abrigos;Lavagem de abrigos de passageiros;equipe;36.03;2019
+2019;lavagem_abrigos;Lavagem de abrigos de passageiros;equipe;34.8;2019
+2017;lavagem_vias;Lavagem de vias;equipe;72.0;2019
+2017;lavagem_vias;Lavagem de vias;equipe;72.0;2020
+2017;lavagem_vias;Lavagem de vias;equipe;72.0;2021
+2017;lavagem_vias;Lavagem de vias;equipe;72.0;2022
+2017;lavagem_vias;Lavagem de vias;equipe;72.0;2023
+2018;lavagem_vias;Lavagem de vias;equipe;72.19;2019
+2018;lavagem_vias;Lavagem de vias;equipe;72.19;2020
+2018;lavagem_vias;Lavagem de vias;equipe;72.19;2021
+2018;lavagem_vias;Lavagem de vias;equipe;72.19;2022
+2018;lavagem_vias;Lavagem de vias;equipe;72.19;2023
+2019;lavagem_vias;Lavagem de vias;equipe;66.2;2019
+2019;lavagem_vias;Lavagem de vias;equipe;78.7;2020
+2019;lavagem_vias;Lavagem de vias;equipe;78.7;2021
+2019;lavagem_vias;Lavagem de vias;equipe;78.7;2022
+2019;lavagem_vias;Lavagem de vias;equipe;78.7;2023
+2020;lavagem_vias;Lavagem de vias;equipe;71.62;2020
+2020;lavagem_vias;Lavagem de vias;equipe;71.62;2021
+2020;lavagem_vias;Lavagem de vias;equipe;71.62;2022
+2020;lavagem_vias;Lavagem de vias;equipe;71.62;2023
+2021;lavagem_vias;Lavagem de vias;equipe;73.67;2021
+2021;lavagem_vias;Lavagem de vias;equipe;73.67;2022
+2021;lavagem_vias;Lavagem de vias;equipe;73.67;2023
+2022;lavagem_vias;Lavagem de vias;equipe;83.89;2022
+2022;lavagem_vias;Lavagem de vias;equipe;83.89;2023
+2023;lavagem_vias;Lavagem de vias;equipe;84.0;2023
+2020;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.32;2020
+2020;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.32;2021
+2020;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.32;2022
+2020;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.32;2023
+2021;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.96;2021
+2021;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.96;2022
+2021;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.96;2023
+2022;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.77;2022
+2022;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.77;2023
+2023;limpeza_equip_bens;Limpeza de equipamentos e bens públicos;equipe;47.96;2023
+2014;pintura_meios_fios;Pintura de meios-fios;km;8159.0;2016
+2015;pintura_meios_fios;Pintura de meios-fios;km;4237.0;2016
+2015;pintura_meios_fios;Pintura de meios-fios;km;4237.0;2017
+2015;pintura_meios_fios;Pintura de meios-fios;km;4237.0;2018
+2016;pintura_meios_fios;Pintura de meios-fios;km;5349.0;2016
+2016;pintura_meios_fios;Pintura de meios-fios;km;5349.0;2017
+2016;pintura_meios_fios;Pintura de meios-fios;km;5349.0;2018
+2017;pintura_meios_fios;Pintura de meios-fios;km;8127.0;2017
+2017;pintura_meios_fios;Pintura de meios-fios;km;8269.0;2018
+2017;pintura_meios_fios;Pintura de meios-fios;equipe;71.3;2019
+2017;pintura_meios_fios;Pintura de meios-fios;equipe;71.3;2020
+2017;pintura_meios_fios;Pintura de meios-fios;equipe;71.3;2021
+2017;pintura_meios_fios;Pintura de meios-fios;equipe;71.3;2022
+2017;pintura_meios_fios;Pintura de meios-fios;equipe;71.3;2023
+2018;pintura_meios_fios;Pintura de meios-fios;km;8734.0;2018
+2018;pintura_meios_fios;Pintura de meios-fios;equipe;75.4;2019
+2018;pintura_meios_fios;Pintura de meios-fios;equipe;75.4;2020
+2018;pintura_meios_fios;Pintura de meios-fios;equipe;75.4;2021
+2018;pintura_meios_fios;Pintura de meios-fios;equipe;75.4;2022
+2018;pintura_meios_fios;Pintura de meios-fios;equipe;75.4;2023
+2019;pintura_meios_fios;Pintura de meios-fios;equipe;78.7;2019
+2019;pintura_meios_fios;Pintura de meios-fios;equipe;78.7;2020
+2019;pintura_meios_fios;Pintura de meios-fios;equipe;78.7;2021
+2019;pintura_meios_fios;Pintura de meios-fios;equipe;78.7;2022
+2019;pintura_meios_fios;Pintura de meios-fios;equipe;78.7;2023
+2020;pintura_meios_fios;Pintura de meios-fios;equipe;70.56;2020
+2020;pintura_meios_fios;Pintura de meios-fios;equipe;70.56;2021
+2020;pintura_meios_fios;Pintura de meios-fios;equipe;70.56;2022
+2020;pintura_meios_fios;Pintura de meios-fios;equipe;70.56;2023
+2021;pintura_meios_fios;Pintura de meios-fios;equipe;118.4;2021
+2021;pintura_meios_fios;Pintura de meios-fios;equipe;118.4;2022
+2021;pintura_meios_fios;Pintura de meios-fios;equipe;118.4;2023
+2022;pintura_meios_fios;Pintura de meios-fios;equipe;154.31;2022
+2022;pintura_meios_fios;Pintura de meios-fios;equipe;154.31;2023
+2023;pintura_meios_fios;Pintura de meios-fios;equipe;154.97;2023
+2015;processado_usinas;Resíduos processados em usinas;t;209121.0;2017
+2015;processado_usinas;Resíduos processados em usinas;t;209121.0;2018
+2016;processado_usinas;Resíduos processados em usinas;t;229054.0;2017
+2016;processado_usinas;Resíduos processados em usinas;t;229054.0;2018
+2017;processado_usinas;Resíduos processados em usinas;t;233595.0;2017
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2018
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2019
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2020
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2021
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2022
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2023
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2024
+2017;processado_usinas;Resíduos processados em usinas;t;230916.0;2025
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2018
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2019
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2020
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2021
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2022
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2023
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2024
+2018;processado_usinas;Resíduos processados em usinas;t;238851.0;2025
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2019
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2020
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2021
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2022
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2023
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2024
+2019;processado_usinas;Resíduos processados em usinas;t;225357.0;2025
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2020
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2021
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2022
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2023
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2024
+2020;processado_usinas;Resíduos processados em usinas;t;228422.0;2025
+2021;processado_usinas;Resíduos processados em usinas;t;251348.0;2021
+2021;processado_usinas;Resíduos processados em usinas;t;251348.0;2022
+2021;processado_usinas;Resíduos processados em usinas;t;251348.0;2023
+2021;processado_usinas;Resíduos processados em usinas;t;251348.0;2024
+2021;processado_usinas;Resíduos processados em usinas;t;251348.0;2025
+2022;processado_usinas;Resíduos processados em usinas;t;274659.0;2022
+2022;processado_usinas;Resíduos processados em usinas;t;274659.0;2023
+2022;processado_usinas;Resíduos processados em usinas;t;274659.0;2024
+2022;processado_usinas;Resíduos processados em usinas;t;274659.0;2025
+2023;processado_usinas;Resíduos processados em usinas;t;283402.0;2023
+2023;processado_usinas;Resíduos processados em usinas;t;283402.0;2024
+2023;processado_usinas;Resíduos processados em usinas;t;283402.0;2025
+2024;processado_usinas;Resíduos processados em usinas;t;302297.0;2024
+2024;processado_usinas;Resíduos processados em usinas;t;302297.0;2025
+2025;processado_usinas;Resíduos processados em usinas;t;292481.0;2025
+2017;rejeito_irr;Retirada de rejeitos das IRRs;equipe;0.0;2019
+2018;rejeito_irr;Retirada de rejeitos das IRRs;equipe;2.125;2019
+2019;rejeito_irr;Retirada de rejeitos das IRRs;equipe;24.68;2019
+2020;rejeito_irr;Retirada de rejeitos das IRRs;viagem;9649.78;2020
+2020;rejeito_irr;Retirada de rejeitos das IRRs;viagem;3517.0;2021
+2020;rejeito_irr;Retirada de rejeitos das IRRs;viagem;3517.0;2022
+2020;rejeito_irr;Retirada de rejeitos das IRRs;viagem;3517.0;2023
+2020;rejeito_irr;Retirada de rejeitos das IRRs;t;3517.0;2024
+2020;rejeito_irr;Retirada de rejeitos das IRRs;t;3517.0;2025
+2021;rejeito_irr;Retirada de rejeitos das IRRs;viagem;19961.76;2021
+2021;rejeito_irr;Retirada de rejeitos das IRRs;viagem;19961.76;2022
+2021;rejeito_irr;Retirada de rejeitos das IRRs;viagem;19961.76;2023
+2021;rejeito_irr;Retirada de rejeitos das IRRs;t;19961.76;2024
+2021;rejeito_irr;Retirada de rejeitos das IRRs;t;19961.76;2025
+2022;rejeito_irr;Retirada de rejeitos das IRRs;viagem;22701.53;2022
+2022;rejeito_irr;Retirada de rejeitos das IRRs;viagem;22701.53;2023
+2022;rejeito_irr;Retirada de rejeitos das IRRs;t;22701.53;2024
+2022;rejeito_irr;Retirada de rejeitos das IRRs;t;22701.53;2025
+2023;rejeito_irr;Retirada de rejeitos das IRRs;viagem;22156.49;2023
+2023;rejeito_irr;Retirada de rejeitos das IRRs;t;22156.49;2024
+2023;rejeito_irr;Retirada de rejeitos das IRRs;t;22156.49;2025
+2024;rejeito_irr;Retirada de rejeitos das IRRs;t;22825.47;2024
+2024;rejeito_irr;Retirada de rejeitos das IRRs;t;22825.47;2025
+2025;rejeito_irr;Retirada de rejeitos das IRRs;t;28681.0;2025
+2017;servicos_diversos;Serviços diversos;equipe;401.02;2019
+2018;servicos_diversos;Serviços diversos;equipe;316.46;2019
+2019;servicos_diversos;Serviços diversos;equipe;242.26;2019
+2014;transferencia;Transferência de resíduos;t_x_km;14081692.0;2016
+2015;transferencia;Transferência de resíduos;t_x_km;14773167.0;2016
+2015;transferencia;Transferência de resíduos;t_x_km;14773167.0;2018
+2016;transferencia;Transferência de resíduos;t_x_km;14782791.0;2016
+2016;transferencia;Transferência de resíduos;t_x_km;14782791.0;2018
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2018
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2019
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2020
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2021
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2022
+2017;transferencia;Transferência de resíduos;t_x_km;17004130.0;2023
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2018
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2019
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2020
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2021
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2022
+2018;transferencia;Transferência de resíduos;t_x_km;18072534.0;2023
+2019;transferencia;Transferência de resíduos;t_x_km;21468117.0;2019
+2019;transferencia;Transferência de resíduos;t_x_km;21468117.0;2020
+2019;transferencia;Transferência de resíduos;t_x_km;21468117.0;2021
+2019;transferencia;Transferência de resíduos;t_x_km;21468117.0;2022
+2019;transferencia;Transferência de resíduos;t_x_km;21468117.0;2023
+2020;transferencia;Transferência de resíduos;t_x_km;35193461.0;2020
+2020;transferencia;Transferência de resíduos;t_x_km;35193461.0;2021
+2020;transferencia;Transferência de resíduos;t_x_km;35193461.0;2022
+2020;transferencia;Transferência de resíduos;t_x_km;35193461.0;2023
+2021;transferencia;Transferência de resíduos;t_x_km;31692294.0;2021
+2021;transferencia;Transferência de resíduos;t_x_km;31692294.0;2022
+2021;transferencia;Transferência de resíduos;t_x_km;31692294.0;2023
+2022;transferencia;Transferência de resíduos;t_x_km;31084917.0;2022
+2022;transferencia;Transferência de resíduos;t_x_km;31084917.0;2023
+2023;transferencia;Transferência de resíduos;t_x_km;31084917.0;2023
+2017;transporte_chorume;Transporte de chorume;viagem;0.0;2019
+2018;transporte_chorume;Transporte de chorume;viagem;946.0;2019
+2018;transporte_chorume;Transporte de chorume;viagem;946.0;2020
+2018;transporte_chorume;Transporte de chorume;viagem;946.0;2021
+2018;transporte_chorume;Transporte de chorume;viagem;946.0;2022
+2018;transporte_chorume;Transporte de chorume;viagem;946.0;2023
+2019;transporte_chorume;Transporte de chorume;viagem;1542.0;2019
+2019;transporte_chorume;Transporte de chorume;viagem;1542.0;2020
+2019;transporte_chorume;Transporte de chorume;viagem;1542.0;2021
+2019;transporte_chorume;Transporte de chorume;viagem;1542.0;2022
+2019;transporte_chorume;Transporte de chorume;viagem;1542.0;2023
+2017;tratamento_chorume;Tratamento de chorume;m3;0.0;2019
+2018;tratamento_chorume;Tratamento de chorume;m3;0.0;2019
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2019
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2020
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2021
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2022
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2023
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2024
+2019;tratamento_chorume;Tratamento de chorume;m3;18588.0;2025
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2020
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2021
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2022
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2023
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2024
+2020;tratamento_chorume;Tratamento de chorume;m3;398489.35;2025
+2021;tratamento_chorume;Tratamento de chorume;m3;306152.4;2021
+2021;tratamento_chorume;Tratamento de chorume;m3;306152.4;2022
+2021;tratamento_chorume;Tratamento de chorume;m3;306152.4;2023
+2021;tratamento_chorume;Tratamento de chorume;m3;306152.4;2024
+2021;tratamento_chorume;Tratamento de chorume;m3;306152.4;2025
+2022;tratamento_chorume;Tratamento de chorume;m3;266788.07;2022
+2022;tratamento_chorume;Tratamento de chorume;m3;266788.07;2023
+2022;tratamento_chorume;Tratamento de chorume;m3;266788.07;2024
+2022;tratamento_chorume;Tratamento de chorume;m3;266788.07;2025
+2023;tratamento_chorume;Tratamento de chorume;m3;303111.29;2023
+2023;tratamento_chorume;Tratamento de chorume;m3;303111.29;2024
+2023;tratamento_chorume;Tratamento de chorume;m3;303111.29;2025
+2024;tratamento_chorume;Tratamento de chorume;m3;378805.9;2024
+2024;tratamento_chorume;Tratamento de chorume;m3;378805.9;2025
+2025;tratamento_chorume;Tratamento de chorume;m3;460052.0;2025
+2014;varricao_manual;Varrição manual;km;1324175.0;2016
+2015;varricao_manual;Varrição manual;km;1345889.0;2016
+2015;varricao_manual;Varrição manual;km;1345889.0;2017
+2015;varricao_manual;Varrição manual;km;1345889.0;2018
+2016;varricao_manual;Varrição manual;km;1250559.0;2016
+2016;varricao_manual;Varrição manual;km;1250559.0;2017
+2016;varricao_manual;Varrição manual;km;1250559.0;2018
+2017;varricao_manual;Varrição manual;km;1284173.0;2017
+2017;varricao_manual;Varrição manual;km;1284173.0;2018
+2017;varricao_manual;Varrição manual;km;1284173.0;2019
+2017;varricao_manual;Varrição manual;km;1284173.0;2020
+2017;varricao_manual;Varrição manual;km;1284173.0;2021
+2017;varricao_manual;Varrição manual;km;1284173.0;2022
+2017;varricao_manual;Varrição manual;km;1284173.0;2023
+2017;varricao_manual;Varrição manual;km;1284173.0;2024
+2017;varricao_manual;Varrição manual;km;1284173.0;2025
+2018;varricao_manual;Varrição manual;km;1204297.0;2018
+2018;varricao_manual;Varrição manual;km;1204297.0;2019
+2018;varricao_manual;Varrição manual;km;1204297.0;2020
+2018;varricao_manual;Varrição manual;km;1204297.0;2021
+2018;varricao_manual;Varrição manual;km;1204297.0;2022
+2018;varricao_manual;Varrição manual;km;1204297.0;2023
+2018;varricao_manual;Varrição manual;km;1204297.0;2024
+2018;varricao_manual;Varrição manual;km;1204297.0;2025
+2019;varricao_manual;Varrição manual;km;1193036.0;2019
+2019;varricao_manual;Varrição manual;km;1193036.0;2020
+2019;varricao_manual;Varrição manual;km;1193036.0;2021
+2019;varricao_manual;Varrição manual;km;1193036.0;2022
+2019;varricao_manual;Varrição manual;km;1193036.0;2023
+2019;varricao_manual;Varrição manual;km;1193036.0;2024
+2019;varricao_manual;Varrição manual;km;1193036.0;2025
+2020;varricao_manual;Varrição manual;km;1039063.1;2020
+2020;varricao_manual;Varrição manual;km;1039063.1;2021
+2020;varricao_manual;Varrição manual;km;1039063.1;2022
+2020;varricao_manual;Varrição manual;km;1039063.1;2023
+2020;varricao_manual;Varrição manual;km;1039063.1;2024
+2020;varricao_manual;Varrição manual;km;1039063.1;2025
+2021;varricao_manual;Varrição manual;km;1053705.3;2021
+2021;varricao_manual;Varrição manual;km;1053705.3;2022
+2021;varricao_manual;Varrição manual;km;1053705.3;2023
+2021;varricao_manual;Varrição manual;km;1053705.3;2024
+2021;varricao_manual;Varrição manual;km;1053705.3;2025
+2022;varricao_manual;Varrição manual;km;1062528.2;2022
+2022;varricao_manual;Varrição manual;km;1062528.2;2023
+2022;varricao_manual;Varrição manual;km;1062528.2;2024
+2022;varricao_manual;Varrição manual;km;1062528.2;2025
+2023;varricao_manual;Varrição manual;km;1063007.3;2023
+2023;varricao_manual;Varrição manual;km;1063007.3;2024
+2023;varricao_manual;Varrição manual;km;1063007.3;2025
+2024;varricao_manual;Varrição manual;km;1036909.8;2024
+2024;varricao_manual;Varrição manual;km;1036909.8;2025
+2025;varricao_manual;Varrição manual;km;1067450.0;2025
+2014;varricao_mecanizada;Varrição mecanizada;km;34741.0;2016
+2015;varricao_mecanizada;Varrição mecanizada;km;25539.0;2016
+2015;varricao_mecanizada;Varrição mecanizada;km;25539.0;2017
+2015;varricao_mecanizada;Varrição mecanizada;km;25539.0;2018
+2016;varricao_mecanizada;Varrição mecanizada;km;46723.0;2016
+2016;varricao_mecanizada;Varrição mecanizada;km;46723.0;2017
+2016;varricao_mecanizada;Varrição mecanizada;km;46723.0;2018
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2017
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2018
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2019
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2020
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2021
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2022
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2023
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2024
+2017;varricao_mecanizada;Varrição mecanizada;km;41288.0;2025
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2018
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2019
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2020
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2021
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2022
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2023
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2024
+2018;varricao_mecanizada;Varrição mecanizada;km;42187.0;2025
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2019
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2020
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2021
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2022
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2023
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2024
+2019;varricao_mecanizada;Varrição mecanizada;km;61407.0;2025
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2020
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2021
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2022
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2023
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2024
+2020;varricao_mecanizada;Varrição mecanizada;km;152814.3;2025
+2021;varricao_mecanizada;Varrição mecanizada;km;171517.1;2021
+2021;varricao_mecanizada;Varrição mecanizada;km;171517.1;2022
+2021;varricao_mecanizada;Varrição mecanizada;km;171517.1;2023
+2021;varricao_mecanizada;Varrição mecanizada;km;171517.1;2024
+2021;varricao_mecanizada;Varrição mecanizada;km;171517.1;2025
+2022;varricao_mecanizada;Varrição mecanizada;km;214002.1;2022
+2022;varricao_mecanizada;Varrição mecanizada;km;214002.1;2023
+2022;varricao_mecanizada;Varrição mecanizada;km;214002.1;2024
+2022;varricao_mecanizada;Varrição mecanizada;km;214002.1;2025
+2023;varricao_mecanizada;Varrição mecanizada;km;213752.2;2023
+2023;varricao_mecanizada;Varrição mecanizada;km;213752.2;2024
+2023;varricao_mecanizada;Varrição mecanizada;km;213752.2;2025
+2024;varricao_mecanizada;Varrição mecanizada;km;212779.1;2024
+2024;varricao_mecanizada;Varrição mecanizada;km;212779.1;2025
+2025;varricao_mecanizada;Varrição mecanizada;km;213081.0;2025

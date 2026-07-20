@@ -1,0 +1,18 @@
+﻿ÁREA;ID;NECESSIDADE;ATENDIDAS;SEM PREVISÃO;A LICITAR;TERMO DE REFERÊNCIA
+Sistema;N1;Sistema automatizado para gerenciar resíduos da construção civil;x;;;
+Sistema;N2;Cadastro de Grandes Geradores;x;;;
+Sistema;N3;Cadastro de Transportadores;x;;;
+Sistema;N4;Cadastro de Eventos;x;;;
+Sistema;N5;Sistema monitoramento em tempo real;x;;;
+Sistema;N6;Sistema de Pesagem das balanças do aterro controlado;x;;;
+Infraestrutura;N7;Contratação de serviços na forma de outsourcing de impressão;x;;;
+Infraestrutura;N8;Adquirir Solução Tecnológica de Segurança Rede (Firewall);x;;;
+Infraestrutura;N9;Adquirir novos servidores de rede;;;x;
+Infraestrutura;N10;Conexão de internet / VPN / MPLS;x;;;
+Infraestrutura;N11;Compra de aparelhos GPS;x;;;
+Infraestrutura;N12;Adquirir novos ativos de rede (switch, roteadores, sistemas);;;x;
+Infraestrutura;N13;Adquirir Storage e backup;x;;;
+Sistema;N14;Sistemas para área meio;x;;;
+Sistema;N15;Contratação de empresa especializada para criação de site para o SLU;x;;;
+Infraestrutura;N16;Contratar solução de antivírus para os computadores e servidores;;;;x
+Sistema;N17;Sistema de controle de acesso e ponto eletrônico;x;;;

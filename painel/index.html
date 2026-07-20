@@ -1,0 +1,680 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limpeza urbana do DF — explorador da série 2014–2025</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --plane:   #f9f9f7;
+    --surface: #fcfcfb;
+    --ink:     #0b0b0b;
+    --ink-2:   #52514e;
+    --muted:   #898781;
+    --grid:    #e1e0d9;
+    --axis:    #c3c2b7;
+    --ring:    rgba(11,11,11,0.10);
+    --field:   #ffffff;
+    --s1: #2a78d6; --s2: #008300; --s3: #e87ba4; --s4: #eda100;
+    --tip-bg:  #0b0b0b;
+    --tip-ink: #fcfcfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+      --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --ring: rgba(255,255,255,0.14); --field: #232322;
+      --s1: #3987e5; --s2: #008300; --s3: #d55181; --s4: #c98500;
+      --tip-bg: #fcfcfb; --tip-ink: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --ring: rgba(255,255,255,0.14); --field: #232322;
+    --s1: #3987e5; --s2: #008300; --s3: #d55181; --s4: #c98500;
+    --tip-bg: #fcfcfb; --tip-ink: #0b0b0b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; background: var(--plane); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 68rem; margin: 0 auto;
+    padding: clamp(1.5rem,4vw,3rem) clamp(1rem,4vw,2rem) 4rem;
+    display: flex; flex-direction: column; gap: clamp(1.5rem,3vw,2.25rem);
+  }
+  .eyebrow {
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin: 0;
+  }
+  h1 { font-size: clamp(1.7rem,4.5vw,2.6rem); line-height:1.1; letter-spacing:-.022em; margin:.4rem 0 .5rem; }
+  h2 { font-size: 1.12rem; letter-spacing:-.01em; margin:0 0 .25rem; }
+  .lede { color: var(--ink-2); max-width: 46rem; margin:0; }
+  .card {
+    background: var(--surface); border:1px solid var(--ring);
+    border-radius:14px; padding: clamp(1rem,2.4vw,1.6rem);
+  }
+  .sub { color: var(--muted); font-size:.85rem; margin:.15rem 0 1rem; }
+
+  /* --- KPIs --- */
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:.75rem; }
+  .kpi { background:var(--surface); border:1px solid var(--ring); border-radius:12px; padding:.9rem 1rem; }
+  .kpi .n { font-size:1.75rem; font-weight:650; letter-spacing:-.02em; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .kpi .k { font-size:.76rem; color:var(--muted); margin-top:.15rem; }
+
+  /* --- controles, todos numa linha acima dos graficos --- */
+  .controls { display:flex; flex-wrap:wrap; gap:.75rem 1.25rem; align-items:flex-end; margin-bottom:1.1rem; }
+  .ctl { display:flex; flex-direction:column; gap:.28rem; }
+  .ctl label { font-size:.72rem; color:var(--muted); font-weight:600; letter-spacing:.02em; }
+  select, button {
+    font:inherit; font-size:.86rem; color:var(--ink); background:var(--field);
+    border:1px solid var(--axis); border-radius:8px; padding:.4rem .6rem;
+  }
+  button { cursor:pointer; }
+  button[aria-pressed="true"] { background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  .seg { display:flex; gap:.3rem; }
+
+  /* --- seletor de series ---
+     Sao 29 series para no maximo 4 escolhas. Listar as 29 de uma vez enterrava
+     o grafico abaixo da dobra, entao o catalogo mora num dropdown com busca e
+     so a selecao corrente (<= 4) fica sempre visivel. */
+  .picker { display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; margin-bottom:1rem; }
+  .chip {
+    display:inline-flex; align-items:center; gap:.4rem;
+    border:1px solid var(--axis); border-radius:999px; padding:.28rem .7rem;
+    font-size:.8rem; color:var(--ink); background:var(--field); user-select:none;
+    border-color:currentColor; font-weight:600;
+  }
+  .chip .dot { width:.6rem; height:.6rem; border-radius:50%; background:var(--c); flex:none; }
+  .chip .u { color:var(--muted); font-weight:400; font-size:.72rem; }
+  .chip .x {
+    all:unset; cursor:pointer; margin-left:.1rem; padding:0 .15rem; border-radius:4px;
+    color:var(--muted); font-size:.95rem; line-height:1;
+  }
+  .chip .x:hover, .chip .x:focus-visible { color:var(--ink); background:var(--grid); }
+  .picker .vazio { font-size:.8rem; color:var(--muted); }
+
+  /* --- dropdown do catalogo --- */
+  .dd { position:relative; }
+  #dd-btn[aria-expanded="true"] { background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  #dd-btn .cnt { opacity:.7; font-variant-numeric:tabular-nums; }
+  .dd-pop {
+    position:absolute; z-index:30; top:calc(100% + .35rem); left:0;
+    width:min(30rem, 88vw); background:var(--surface);
+    border:1px solid var(--axis); border-radius:12px; padding:.6rem;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+  }
+  .dd-pop input[type="search"] {
+    width:100%; box-sizing:border-box; font:inherit; font-size:.86rem;
+    color:var(--ink); background:var(--field);
+    border:1px solid var(--axis); border-radius:8px; padding:.4rem .6rem;
+  }
+  .dd-list { max-height:min(22rem, 50vh); overflow-y:auto; margin-top:.5rem; }
+  .dd-grupo {
+    font-size:.7rem; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--muted); padding:.5rem .4rem .2rem;
+    position:sticky; top:0; background:var(--surface);
+  }
+  /* all:unset PRIMEIRO: ele zera tudo que vier antes, inclusive o display,
+     e um .opt sem flex quebra a linha entre a caixa e o rotulo */
+  .opt {
+    all:unset;
+    display:flex; align-items:center; gap:.55rem; width:100%; text-align:left;
+    box-sizing:border-box; cursor:pointer;
+    padding:.34rem .4rem; border-radius:7px; font-size:.82rem; color:var(--ink-2);
+  }
+  .opt:hover, .opt:focus-visible { background:var(--field); color:var(--ink); }
+  .opt[aria-checked="true"] { color:var(--ink); font-weight:600; }
+  .opt[aria-disabled="true"] { opacity:.4; cursor:not-allowed; }
+  .opt .caixa {
+    width:1rem; height:1rem; flex:none; border-radius:4px;
+    border:1px solid var(--axis); display:grid; place-items:center; font-size:.7rem;
+  }
+  .opt[aria-checked="true"] .caixa { background:var(--c); border-color:var(--c); color:#fff; }
+  .opt .rot { flex:1; }
+  .opt .meta { color:var(--muted); font-weight:400; font-size:.72rem; font-variant-numeric:tabular-nums; }
+  .dd-foot {
+    display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+    margin-top:.5rem; padding-top:.5rem; border-top:1px solid var(--grid);
+    font-size:.76rem; color:var(--muted);
+  }
+  .dd-foot button { font-size:.76rem; padding:.25rem .55rem; }
+
+  /* --- grafico --- */
+  figure { margin:0; }
+  svg { display:block; width:100%; height:auto; overflow:visible; touch-action:pan-y; }
+  .gridline { stroke:var(--grid); stroke-width:1; }
+  .axisline { stroke:var(--axis); stroke-width:1; }
+  .tick { fill:var(--muted); font-size:11px; }
+  .lbl { font-size:11.5px; font-weight:650; }
+  .serie { fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .mk { stroke:var(--surface); stroke-width:2; }
+  .crosshair { stroke:var(--axis); stroke-width:1; stroke-dasharray:3 3; }
+  .hit { fill:transparent; }
+
+  .legend { display:flex; flex-wrap:wrap; gap:.25rem 1rem; margin:.7rem 0 0; padding:0; list-style:none; font-size:.8rem; color:var(--ink-2); }
+  .legend li { display:flex; align-items:center; gap:.4rem; }
+  .legend .dot { width:.65rem; height:.65rem; border-radius:50%; flex:none; }
+
+  .tip {
+    position:fixed; pointer-events:none; z-index:9; opacity:0; transition:opacity .1s;
+    background:var(--tip-bg); color:var(--tip-ink); border-radius:9px;
+    padding:.5rem .65rem; font-size:.78rem; line-height:1.45; min-width:9rem;
+    box-shadow:0 6px 20px rgba(0,0,0,.22);
+  }
+  .tip b { display:block; margin-bottom:.25rem; font-size:.8rem; }
+  .tip .row { display:flex; justify-content:space-between; gap:1rem; font-variant-numeric:tabular-nums; }
+  .tip .sw { width:.55rem; height:.55rem; border-radius:50%; display:inline-block; margin-right:.35rem; }
+
+  /* --- tabela gemea --- */
+  table { border-collapse:collapse; width:100%; font-size:.82rem; font-variant-numeric:tabular-nums; }
+  caption { text-align:left; color:var(--muted); font-size:.78rem; padding-bottom:.4rem; }
+  th, td { padding:.32rem .5rem; text-align:right; border-bottom:1px solid var(--grid); }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { color:var(--ink); font-weight:650; border-bottom-color:var(--axis); }
+  .tablewrap { overflow-x:auto; margin-top:.9rem; }
+  .na { color:var(--muted); }
+
+  /* --- matriz de cobertura --- */
+  .matrix { overflow-x:auto; }
+  .matrix table { font-size:.76rem; }
+  .matrix td.cell { text-align:center; padding:.2rem; }
+  .matrix .box { display:block; width:100%; height:1.1rem; border-radius:3px; background:var(--grid); }
+  .matrix .box[data-v="1"] { background:var(--s1); }
+  .matrix tr { cursor:pointer; }
+  .matrix tr:hover td { background:color-mix(in srgb, var(--s1) 8%, transparent); }
+  .matrix td:first-child { white-space:nowrap; max-width:16rem; overflow:hidden; text-overflow:ellipsis; }
+
+  .warn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:1rem; height:1rem; border-radius:50%; flex:none;
+    background:var(--s4); color:#0b0b0b; font-size:.72rem; font-weight:700;
+  }
+  .note { font-size:.8rem; color:var(--muted); margin:.9rem 0 0; }
+  .note strong { color:var(--ink-2); }
+  footer { color:var(--muted); font-size:.78rem; border-top:1px solid var(--grid); padding-top:1rem; }
+  a { color:inherit; }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">SLU · Distrito Federal · 2014–2025</p>
+    <h1>O que o SLU mediu, ano a ano</h1>
+    <p class="lede">
+      Doze relatórios anuais de atividades, extraídos de 1.704 páginas de PDF e
+      validados por sobreposição. Escolha as séries, o período e a forma de
+      comparar — os números abaixo respondem à seleção.
+    </p>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="card">
+    <h2>Explorador da série</h2>
+    <p class="sub" id="explorer-sub"></p>
+
+    <div class="controls">
+      <div class="ctl">
+        <label for="de">De</label>
+        <select id="de"></select>
+      </div>
+      <div class="ctl">
+        <label for="ate">Até</label>
+        <select id="ate"></select>
+      </div>
+      <div class="ctl">
+        <label for="uni">Unidade</label>
+        <select id="uni"></select>
+      </div>
+      <div class="ctl">
+        <label>Escala</label>
+        <div class="seg">
+          <button id="m-abs" aria-pressed="true">Valor</button>
+          <button id="m-idx" aria-pressed="false">Índice 100</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Tabela</label>
+        <button id="m-tab" aria-pressed="false">Mostrar dados</button>
+      </div>
+    </div>
+
+    <div class="picker">
+      <div class="chips" id="picker"></div>
+      <div class="dd">
+        <button id="dd-btn" aria-expanded="false" aria-haspopup="dialog" aria-controls="dd-pop">
+          Escolher séries <span class="cnt" id="dd-cnt"></span>
+        </button>
+        <div class="dd-pop" id="dd-pop" hidden role="dialog" aria-label="Escolher séries do gráfico">
+          <input id="dd-busca" type="search" placeholder="Filtrar por nome…"
+                 autocomplete="off" aria-controls="dd-list">
+          <div class="dd-list" id="dd-list"></div>
+          <div class="dd-foot">
+            <span id="dd-msg"></span>
+            <button id="dd-limpar">Limpar seleção</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <figure>
+      <svg id="chart" viewBox="0 0 900 420" role="img" aria-labelledby="chart-desc"></svg>
+      <figcaption id="chart-desc" class="note"></figcaption>
+    </figure>
+    <ul class="legend" id="legend"></ul>
+    <div id="alertas"></div>
+    <div class="tablewrap" id="tabela" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2>O que cada relatório parou de contar</h2>
+    <p class="sub">
+      Cada linha é uma série; cada coluna, um ano. Bloco cheio significa que o
+      valor foi publicado naquele ano. Clique numa linha para levá-la ao gráfico acima.
+    </p>
+    <div class="matrix" id="matrix"></div>
+    <p class="note">
+      As faixas que terminam antes de <strong id="mx-fim"></strong> não são zeros —
+      são séries que os relatórios deixaram de publicar, sem nota explicativa.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Orçamento e taxa de limpeza</h2>
+    <p class="sub">LOA, despesa executada e receita da TLP — tudo em reais correntes, num eixo só.</p>
+    <figure>
+      <svg id="fin" viewBox="0 0 900 380" role="img" aria-labelledby="fin-desc"></svg>
+      <figcaption id="fin-desc" class="note"></figcaption>
+    </figure>
+    <ul class="legend" id="fin-legend"></ul>
+    <p class="note">
+      A despesa de <strong id="fin-parcial"></strong> não é plotada: no momento em que
+      o relatório saiu, a execução era parcial, e o ponto produziria uma queda falsa.
+    </p>
+  </section>
+
+  <footer>
+    Fonte: SLU/DF, relatórios anuais de atividades 2014–2025.
+    Extração, validação cruzada e código em <code>Relatorios_slu/</code>.
+    Valores em reais correntes, sem deflacionar.
+  </footer>
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const DADOS = {"anos":[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"series":[{"id":"coleta_corretiva__t","rotulo":"Coleta de remoção (corretiva)","unidade":"t","valores":[741750.0,706855.0,772268.0,636005.0,438079.0,425175.0,615760.8,612086.0,600048.4,651290.0,653934.6,678075.0],"ini":2014,"fim":2025,"n_anos":12,"divergencia_max":0.22,"n_fontes_max":9,"alerta":null},{"id":"coleta_domiciliar_comercial__t","rotulo":"Coleta domiciliar e comercial","unidade":"t","valores":[844186.0,843217.0,818771.0,828765.0,800685.0,782125.0,786122.0,729082.7,696995.94,710679.23,730174.41,724393.0],"ini":2014,"fim":2025,"n_anos":12,"divergencia_max":0.06,"n_fontes_max":9,"alerta":null},{"id":"coleta_seletiva__t","rotulo":"Coleta seletiva","unidade":"t","valores":[48586.0,57496.0,48673.0,29968.0,28549.0,28522.0,18311.03,31865.72,33761.43,44681.4,48852.75,54549.0],"ini":2014,"fim":2025,"n_anos":12,"divergencia_max":1.37,"n_fontes_max":9,"alerta":null},{"id":"varricao_manual__km","rotulo":"Varrição manual","unidade":"km","valores":[1324175.0,1345889.0,1250559.0,1284173.0,1204297.0,1193036.0,1039063.1,1053705.3,1062528.2,1063007.3,1036909.8,1067450.0],"ini":2014,"fim":2025,"n_anos":12,"divergencia_max":0.0,"n_fontes_max":9,"alerta":null},{"id":"varricao_mecanizada__km","rotulo":"Varrição mecanizada","unidade":"km","valores":[34741.0,25539.0,46723.0,41288.0,42187.0,61407.0,152814.3,171517.1,214002.1,213752.2,212779.1,213081.0],"ini":2014,"fim":2025,"n_anos":12,"divergencia_max":0.0,"n_fontes_max":9,"alerta":null},{"id":"processado_usinas__t","rotulo":"Resíduos processados em usinas","unidade":"t","valores":[null,209121.0,229054.0,230916.0,238851.0,225357.0,228422.0,251348.0,274659.0,283402.0,302297.0,292481.0],"ini":2015,"fim":2025,"n_anos":11,"divergencia_max":1.15,"n_fontes_max":9,"alerta":null},{"id":"transferencia__t_x_km","rotulo":"Transferência de resíduos","unidade":"t_x_km","valores":[14081692.0,14773167.0,14782791.0,17004130.0,18072534.0,21468117.0,35193461.0,31692294.0,31084917.0,31084917.0,null,null],"ini":2014,"fim":2023,"n_anos":10,"divergencia_max":0.0,"n_fontes_max":6,"alerta":null},{"id":"animais_mortos__t","rotulo":"Coleta de animais mortos","unidade":"t","valores":[null,null,null,63.06,83.0,76.18,65.84,76.82,79.95,64.82,69.69,69.54],"ini":2017,"fim":2025,"n_anos":9,"divergencia_max":0.0,"n_fontes_max":6,"alerta":null},{"id":"entulho_ure__t","rotulo":"Entulho aterrado na URE","unidade":"t","valores":[null,null,null,0.0,1303662.0,1423028.0,1589393.18,1466145.31,1485844.51,1507223.8,1599445.58,1450659.0],"ini":2017,"fim":2025,"n_anos":9,"divergencia_max":0.0,"n_fontes_max":7,"alerta":null},{"id":"aterrado_asb__t","rotulo":"Resíduos aterrados no Aterro Sanitário de Brasília","unidade":"t","valores":[null,null,null,252703.0,749608.0,800872.0,821089.0,760763.0,718554.0,743776.0,761311.0,773093.0],"ini":2017,"fim":2025,"n_anos":9,"divergencia_max":0.0,"n_fontes_max":4,"alerta":null},{"id":"tratamento_chorume__m3","rotulo":"Tratamento de chorume","unidade":"m3","valores":[null,null,null,0.0,0.0,18588.0,398489.35,306152.4,266788.07,303111.29,378805.9,460052.0],"ini":2017,"fim":2025,"n_anos":9,"divergencia_max":0.0,"n_fontes_max":7,"alerta":null},{"id":"coleta_rss__t","rotulo":"Coleta de resíduos de serviços de saúde","unidade":"t","valores":[2800.0,2466.0,2217.0,2165.0,2417.0,2513.0,3130.2,506.8,null,null,null,null],"ini":2014,"fim":2021,"n_anos":8,"divergencia_max":0.0,"n_fontes_max":8,"alerta":null},{"id":"domiciliar_aterrado__t","rotulo":"Resíduos domiciliares aterrados","unidade":"t","valores":[856571.0,887220.0,830055.0,809085.0,784460.0,800872.0,821090.0,760781.0,null,null,null,null],"ini":2014,"fim":2021,"n_anos":8,"divergencia_max":0.15,"n_fontes_max":5,"alerta":null},{"id":"catacao_papel__equipe","rotulo":"Catação de papel em áreas verdes","unidade":"equipe","valores":[null,null,null,363.7,414.64,411.99,323.8,97.67,81.42,84.83,null,null],"ini":2017,"fim":2023,"n_anos":7,"divergencia_max":0.0,"n_fontes_max":5,"alerta":null},{"id":"lavagem_vias__equipe","rotulo":"Lavagem de vias","unidade":"equipe","valores":[null,null,null,72.0,72.19,78.7,71.62,73.67,83.89,84.0,null,null],"ini":2017,"fim":2023,"n_anos":7,"divergencia_max":15.88,"n_fontes_max":5,"alerta":null},{"id":"pintura_meios_fios__equipe","rotulo":"Pintura de meios-fios","unidade":"equipe","valores":[null,null,null,71.3,75.4,78.7,70.56,118.4,154.31,154.97,null,null],"ini":2017,"fim":2023,"n_anos":7,"divergencia_max":0.0,"n_fontes_max":5,"alerta":null},{"id":"entulho_pev__equipe","rotulo":"Retirada de entulho dos PEVs","unidade":"equipe","valores":[null,null,null,0.0,4.916,17.89,54.88,59.88,65.65,65.65,null,null],"ini":2017,"fim":2023,"n_anos":7,"divergencia_max":0.0,"n_fontes_max":5,"alerta":null},{"id":"animais_mortos__unidade","rotulo":"Coleta de animais mortos","unidade":"unidade","valores":[4481.0,2952.0,3281.0,2920.0,3011.0,2181.0,null,null,null,null,null,null],"ini":2014,"fim":2019,"n_anos":6,"divergencia_max":0.0,"n_fontes_max":3,"alerta":null},{"id":"caixa_gordura__t","rotulo":"Resíduos de caixa de gordura / pós-eventos","unidade":"t","valores":[null,null,null,null,null,null,107.25,97.67,81.42,84.83,81.84,79.33],"ini":2020,"fim":2025,"n_anos":6,"divergencia_max":0.0,"n_fontes_max":6,"alerta":null},{"id":"rejeito_irr__t","rotulo":"Retirada de rejeitos das IRRs","unidade":"t","valores":[null,null,null,null,null,null,3517.0,19961.76,22701.53,22156.49,22825.47,28681.0],"ini":2020,"fim":2025,"n_anos":6,"divergencia_max":0.0,"n_fontes_max":2,"alerta":"mesmo valor declarado sob mais de uma unidade — uma das etiquetas está errada"},{"id":"catacao_residuos__ha","rotulo":"Catação de resíduos","unidade":"ha","valores":[190573.0,143878.0,150975.0,187268.0,214456.0,null,null,null,null,null,null,null],"ini":2014,"fim":2018,"n_anos":5,"divergencia_max":0.0,"n_fontes_max":3,"alerta":null},{"id":"lavagem_abrigos__unidade","rotulo":"Lavagem de abrigos de passageiros","unidade":"unidade","valores":[119071.0,65311.0,42791.0,71235.0,84279.0,null,null,null,null,null,null,null],"ini":2014,"fim":2018,"n_anos":5,"divergencia_max":0.0,"n_fontes_max":3,"alerta":null},{"id":"pintura_meios_fios__km","rotulo":"Pintura de meios-fios","unidade":"km","valores":[8159.0,4237.0,5349.0,8269.0,8734.0,null,null,null,null,null,null,null],"ini":2014,"fim":2018,"n_anos":5,"divergencia_max":1.72,"n_fontes_max":3,"alerta":null},{"id":"limpeza_equip_bens__equipe","rotulo":"Limpeza de equipamentos e bens públicos","unidade":"equipe","valores":[null,null,null,null,null,null,47.32,47.96,47.77,47.96,null,null],"ini":2020,"fim":2023,"n_anos":4,"divergencia_max":0.0,"n_fontes_max":4,"alerta":null},{"id":"rejeito_irr__viagem","rotulo":"Retirada de rejeitos das IRRs","unidade":"viagem","valores":[null,null,null,null,null,null,3517.0,19961.76,22701.53,22156.49,null,null],"ini":2020,"fim":2023,"n_anos":4,"divergencia_max":63.55,"n_fontes_max":4,"alerta":"mesmo valor declarado sob mais de uma unidade — uma das etiquetas está errada"},{"id":"lavagem_abrigos__equipe","rotulo":"Lavagem de abrigos de passageiros","unidade":"equipe","valores":[null,null,null,35.13,36.03,34.8,null,null,null,null,null,null],"ini":2017,"fim":2019,"n_anos":3,"divergencia_max":0.0,"n_fontes_max":1,"alerta":null},{"id":"rejeito_irr__equipe","rotulo":"Retirada de rejeitos das IRRs","unidade":"equipe","valores":[null,null,null,0.0,2.125,24.68,null,null,null,null,null,null],"ini":2017,"fim":2019,"n_anos":3,"divergencia_max":0.0,"n_fontes_max":1,"alerta":"mesmo valor declarado sob mais de uma unidade — uma das etiquetas está errada"},{"id":"servicos_diversos__equipe","rotulo":"Serviços diversos","unidade":"equipe","valores":[null,null,null,401.02,316.46,242.26,null,null,null,null,null,null],"ini":2017,"fim":2019,"n_anos":3,"divergencia_max":0.0,"n_fontes_max":1,"alerta":null},{"id":"transporte_chorume__viagem","rotulo":"Transporte de chorume","unidade":"viagem","valores":[null,null,null,0.0,946.0,1542.0,null,null,null,null,null,null],"ini":2017,"fim":2019,"n_anos":3,"divergencia_max":0.0,"n_fontes_max":5,"alerta":null}],"unidades":{"t":"toneladas","km":"quilômetros","unidade":"unidades","equipe":"equipes","ha":"hectares","viagem":"viagens","m3":"metros cúbicos","t_x_km":"tonelada × km"},"financeiro":{"anos":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"loa":[null,null,null,null,null,null,323272152.0,310685339.0,389082954.0,366068361.0,346111997.0,498067973.0,472234656.0,532116663.0,534773833.0,585489991.0,547859303.0,589308218.0,685250423.0,676314030.0,712104967.0],"despesa":[null,null,null,null,null,null,262768454.0,361897714.0,409233166.0,443347285.0,487197691.0,495849555.0,532513645.0,547033386.0,497348293.0,531602486.0,568336065.0,686468543.0,815790562.0,620788954.0,null],"tlp":[60457462.85,67477330.4,89260199.0,88899388.98,90503558.73,98620587.56,106351621.97,113585231.56,133964473.0,130782508.7,145753320.0,155527079.0,161396446.0,163637281.0,183140330.0,182886863.0,205269385.0,152316184.0,180915343.0,173082803.0,194965107.0]},"meta":{"n_series":29,"n_atividades":24,"ano_ini":2014,"ano_fim":2025,"despesa_parcial":2025,"n_pontos":214,"n_descontinuadas":12,"n_divergentes":5}};
+
+const CORES = ['--s1','--s2','--s3','--s4'];
+const MAX = 4;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $ = s => document.querySelector(s);
+
+const nf = new Intl.NumberFormat('pt-BR', {maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('pt-BR', {maximumFractionDigits:1});
+const fmt = v => v == null ? '—' : (Math.abs(v) >= 1000 ? nf.format(v) : nf1.format(v));
+const fmtRS = v => v == null ? '—' : 'R$ ' + nf1.format(v/1e6) + ' mi';
+
+const estado = {
+  sel: [],
+  de: DADOS.anos[0],
+  ate: DADOS.anos[DADOS.anos.length-1],
+  uni: 'todas',
+  modo: 'abs',
+  tabela: false
+};
+
+/* series longas primeiro ja vem ordenado do payload */
+const porId = Object.fromEntries(DADOS.series.map(s => [s.id, s]));
+estado.sel = DADOS.series.slice(0,3).map(s => s.id);
+
+/* ---------- KPIs ---------- */
+/* Nenhum KPI aqui e uma variacao percentual. Toda variacao depende do ano-base
+   escolhido, e esta serie tem um vale profundo em 2020: ancorar um numero de
+   manchete nele diria "triplicou" sobre o que, em doze anos, cresceu 12%.
+   Quem quiser a variacao escolhe o periodo no explorador, vendo a base. */
+function kpis() {
+  const m = DADOS.meta;
+  const itens = [
+    [m.n_atividades,     'atividades medidas'],
+    [nf.format(m.n_pontos), 'valores publicados'],
+    [m.n_descontinuadas, 'atividades que os relatórios deixaram de contar'],
+    [m.n_divergentes,    'pontos em que os relatórios discordam entre si']
+  ];
+  $('#kpis').innerHTML = itens.map(([n,k]) =>
+    `<div class="kpi"><div class="n">${n}</div><div class="k">${k}</div></div>`).join('');
+}
+
+/* ---------- controles ---------- */
+function montaControles() {
+  const de = $('#de'), ate = $('#ate'), uni = $('#uni');
+  DADOS.anos.forEach(a => {
+    de.add(new Option(a, a, false, a === estado.de));
+    ate.add(new Option(a, a, false, a === estado.ate));
+  });
+  uni.add(new Option('todas', 'todas', false, true));
+  [...new Set(DADOS.series.map(s => s.unidade))].forEach(u =>
+    uni.add(new Option(DADOS.unidades[u] || u, u)));
+
+  de.onchange = () => { estado.de = +de.value; if (estado.de > estado.ate) { estado.ate = estado.de; ate.value = estado.ate; } render(); };
+  ate.onchange = () => { estado.ate = +ate.value; if (estado.ate < estado.de) { estado.de = estado.ate; de.value = estado.de; } render(); };
+  uni.onchange = () => { estado.uni = uni.value; montaPicker(); render(); };
+
+  $('#m-abs').onclick = () => { estado.modo = 'abs'; render(); };
+  $('#m-idx').onclick = () => { estado.modo = 'idx'; render(); };
+  $('#m-tab').onclick = () => { estado.tabela = !estado.tabela; render(); };
+}
+
+function visiveis() {
+  return DADOS.series.filter(s => estado.uni === 'todas' || s.unidade === estado.uni);
+}
+
+const esc = t => String(t).replace(/[&<>"]/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function alterna(id) {
+  const i = estado.sel.indexOf(id);
+  if (i >= 0) estado.sel.splice(i, 1);
+  else if (estado.sel.length < MAX) estado.sel.push(id);
+  montaPicker(); render();
+}
+
+/* Os chips mostram so o que esta selecionado (no maximo 4). O catalogo inteiro
+   fica no dropdown -- ver o comentario do CSS. */
+function montaChips() {
+  const p = $('#picker');
+  if (!estado.sel.length) {
+    p.innerHTML = '<span class="vazio">Nenhuma série no gráfico.</span>';
+    return;
+  }
+  p.innerHTML = estado.sel.map((id, i) => {
+    const s = porId[id];
+    const av = s.alerta ? `<span class="warn" title="${esc(s.alerta)}">!</span>` : '';
+    return `<span class="chip" style="--c:${css(CORES[i % MAX])}">
+      <span class="dot"></span>${esc(s.rotulo)}<span class="u">${esc(s.unidade)}</span>${av}
+      <button class="x" data-id="${esc(id)}" title="Tirar do gráfico"
+              aria-label="Tirar ${esc(s.rotulo)} do gráfico">&times;</button></span>`;
+  }).join('');
+  p.querySelectorAll('.x').forEach(b => b.onclick = () => alterna(b.dataset.id));
+}
+
+function montaLista() {
+  const termo = ($('#dd-busca').value || '').trim().toLowerCase();
+  const cheio = estado.sel.length >= MAX;
+  const achados = visiveis().filter(s =>
+    !termo || (s.rotulo + ' ' + (DADOS.unidades[s.unidade] || s.unidade)).toLowerCase().includes(termo));
+
+  if (!achados.length) {
+    $('#dd-list').innerHTML = '<div class="dd-grupo">Nada encontrado para esse filtro.</div>';
+  } else {
+    // agrupado por unidade: series de unidades diferentes nao sao comparaveis,
+    // e ver isso na hora de escolher evita a comparacao errada
+    const grupos = {};
+    achados.forEach(s => (grupos[s.unidade] ||= []).push(s));
+    $('#dd-list').innerHTML = Object.entries(grupos).map(([u, itens]) => `
+      <div class="dd-grupo">${esc(DADOS.unidades[u] || u)}</div>
+      ${itens.map(s => {
+        const on = estado.sel.includes(s.id);
+        const cor = on ? css(CORES[estado.sel.indexOf(s.id) % MAX]) : 'transparent';
+        return `<button class="opt" role="checkbox" aria-checked="${on}"
+          data-id="${esc(s.id)}" style="--c:${cor}"
+          ${!on && cheio ? 'aria-disabled="true"' : ''}>
+          <span class="caixa">${on ? '&check;' : ''}</span>
+          <span class="rot">${esc(s.rotulo)}${s.alerta ? ' <span class="warn" title="' + esc(s.alerta) + '">!</span>' : ''}</span>
+          <span class="meta">${s.ini}–${s.fim}</span>
+        </button>`;
+      }).join('')}`).join('');
+  }
+
+  $('#dd-list').querySelectorAll('.opt').forEach(b => {
+    b.onclick = () => {
+      if (b.getAttribute('aria-disabled') === 'true') return;
+      alterna(b.dataset.id);
+      $('#dd-busca').focus();
+    };
+  });
+
+  $('#dd-cnt').textContent = `(${estado.sel.length}/${MAX})`;
+  $('#dd-msg').textContent = cheio
+    ? `Máximo de ${MAX} séries — desmarque uma para trocar.`
+    : `${achados.length} de ${visiveis().length} séries.`;
+}
+
+function montaPicker() { montaChips(); montaLista(); }
+
+function montaDropdown() {
+  const btn = $('#dd-btn'), pop = $('#dd-pop');
+  const abre = a => {
+    pop.hidden = !a;
+    btn.setAttribute('aria-expanded', a);
+    if (a) { montaLista(); $('#dd-busca').focus(); }
+  };
+  btn.onclick = () => abre(pop.hidden);
+  $('#dd-busca').oninput = montaLista;
+  $('#dd-limpar').onclick = () => { estado.sel = []; montaPicker(); render(); };
+
+  // fechar por Escape e por clique fora -- sem isso o popover fica preso aberto
+  // por cima do grafico, que e justamente o que o usuario quer enxergar
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !pop.hidden) { abre(false); btn.focus(); }
+  });
+  document.addEventListener('click', e => {
+    if (!pop.hidden && !pop.contains(e.target) && e.target !== btn && !btn.contains(e.target)) abre(false);
+  });
+}
+
+/* ---------- preparo dos dados ---------- */
+function preparar() {
+  const anos = DADOS.anos.filter(a => a >= estado.de && a <= estado.ate);
+  const idx = anos.map(a => DADOS.anos.indexOf(a));
+  return estado.sel.map((id, i) => {
+    const s = porId[id];
+    let vals = idx.map(k => s.valores[k]);
+    if (estado.modo === 'idx') {
+      const base = vals.find(v => v != null);
+      vals = base ? vals.map(v => v == null ? null : 100*v/base) : vals.map(() => null);
+    }
+    return { id, rotulo: s.rotulo, unidade: s.unidade, cor: css(CORES[i % MAX]), anos, vals };
+  });
+}
+
+/* ---------- grafico de linhas ---------- */
+function linhas(svgSel, series, anos, opts) {
+  const svg = $(svgSel);
+  const W = 900, H = opts.h || 420;
+  const m = { t: 14, r: opts.r ?? 150, b: 34, l: 62 };
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  const todos = series.flatMap(s => s.vals).filter(v => v != null);
+  if (!series.length || !todos.length) {
+    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" class="tick">Selecione ao menos uma série</text>`;
+    return;
+  }
+  let lo = Math.min(0, ...todos), hi = Math.max(...todos);
+  if (hi === lo) hi = lo + 1;
+  const pad = (hi - lo) * 0.08; hi += pad;
+
+  const x = i => m.l + (anos.length === 1 ? 0 : i * (W - m.l - m.r) / (anos.length - 1));
+  const y = v => H - m.b - (v - lo) / (hi - lo) * (H - m.t - m.b);
+
+  const ticks = 5, out = [];
+  for (let k = 0; k <= ticks; k++) {
+    const v = lo + (hi - lo) * k / ticks, yy = y(v);
+    out.push(`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${yy}" y2="${yy}"/>`);
+    out.push(`<text class="tick" x="${m.l-9}" y="${yy+4}" text-anchor="end">${opts.fy(v)}</text>`);
+  }
+  out.push(`<line class="axisline" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`);
+  anos.forEach((a,i) => {
+    if (anos.length > 8 && i % 2 && i !== anos.length-1) return;
+    out.push(`<text class="tick" x="${x(i)}" y="${H-m.b+18}" text-anchor="middle">${a}</text>`);
+  });
+
+  series.forEach(s => {
+    // quebra a linha onde o dado nao existe: buraco e informacao, nao zero
+    let d = '', abrir = true;
+    s.vals.forEach((v,i) => {
+      if (v == null) { abrir = true; return; }
+      d += (abrir ? 'M' : 'L') + x(i) + ' ' + y(v) + ' ';
+      abrir = false;
+    });
+    out.push(`<path class="serie" d="${d}" stroke="${s.cor}"/>`);
+    s.vals.forEach((v,i) => {
+      if (v == null) return;
+      out.push(`<circle class="mk" cx="${x(i)}" cy="${y(v)}" r="4.5" fill="${s.cor}"/>`);
+    });
+    // rotulo direto no ultimo ponto valido: a paleta clara tem cores abaixo de
+    // 3:1 de contraste, entao identidade nunca depende so da cor
+    let last = -1;
+    s.vals.forEach((v,i) => { if (v != null) last = i; });
+    if (last >= 0 && m.r > 40) {
+      out.push(`<text class="lbl" x="${x(last)+10}" y="${y(s.vals[last])+4}" fill="${s.cor}">${s.rotulo.slice(0,22)}</text>`);
+    }
+  });
+
+  out.push(`<line class="crosshair" id="${svgSel.slice(1)}-ch" x1="0" x2="0" y1="${m.t}" y2="${H-m.b}" style="opacity:0"/>`);
+  anos.forEach((a,i) => {
+    const w = (W - m.l - m.r) / Math.max(anos.length-1,1);
+    out.push(`<rect class="hit" x="${x(i)-w/2}" y="${m.t}" width="${w}" height="${H-m.t-m.b}" data-i="${i}"/>`);
+  });
+
+  svg.innerHTML = out.join('');
+
+  const ch = svg.querySelector(`#${svgSel.slice(1)}-ch`);
+  const tip = $('#tip');
+  svg.querySelectorAll('.hit').forEach(r => {
+    const mostra = ev => {
+      const i = +r.dataset.i;
+      ch.setAttribute('x1', x(i)); ch.setAttribute('x2', x(i)); ch.style.opacity = 1;
+      const linhas = series.map(s =>
+        `<div class="row"><span><span class="sw" style="background:${s.cor}"></span>${s.rotulo.slice(0,26)}</span><span>${opts.ft(s.vals[i])}</span></div>`
+      ).join('');
+      tip.innerHTML = `<b>${anos[i]}</b>${linhas}`;
+      tip.style.opacity = 1;
+      const p = ev.touches ? ev.touches[0] : ev;
+      tip.style.left = Math.min(p.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
+      tip.style.top  = Math.max(8, p.clientY - tip.offsetHeight - 12) + 'px';
+    };
+    r.addEventListener('mousemove', mostra);
+    r.addEventListener('touchstart', mostra, {passive:true});
+  });
+  svg.addEventListener('mouseleave', () => { tip.style.opacity = 0; ch.style.opacity = 0; });
+}
+
+/* ---------- tabela gemea ---------- */
+function tabela(series, anos, ft) {
+  if (!estado.tabela || !series.length) { $('#tabela').hidden = true; return; }
+  $('#tabela').hidden = false;
+  const cab = anos.map(a => `<th>${a}</th>`).join('');
+  const corpo = series.map(s => `<tr><td>${s.rotulo} <span class="na">(${s.unidade})</span></td>` +
+    s.vals.map(v => `<td${v==null?' class="na"':''}>${ft(v)}</td>`).join('') + '</tr>').join('');
+  $('#tabela').innerHTML =
+    `<table><caption>Os mesmos números do gráfico. Traço significa ano não publicado.</caption>
+     <thead><tr><th>Série</th>${cab}</tr></thead><tbody>${corpo}</tbody></table>`;
+}
+
+/* ---------- matriz de cobertura ---------- */
+function matriz() {
+  const cab = DADOS.anos.map(a => `<th>${String(a).slice(2)}</th>`).join('');
+  const linhas = DADOS.series.map(s => {
+    const cells = s.valores.map(v =>
+      `<td class="cell"><span class="box" data-v="${v==null?0:1}"></span></td>`).join('');
+    return `<tr data-id="${s.id}"><td title="${s.rotulo}">${s.rotulo} <span class="na">${s.unidade}</span></td>${cells}</tr>`;
+  }).join('');
+  $('#matrix').innerHTML =
+    `<table><thead><tr><th>Série</th>${cab}</tr></thead><tbody>${linhas}</tbody></table>`;
+  $('#matrix').querySelectorAll('tr[data-id]').forEach(tr => {
+    tr.onclick = () => {
+      const id = tr.dataset.id;
+      if (!estado.sel.includes(id)) {
+        if (estado.sel.length >= MAX) estado.sel.shift();
+        estado.sel.push(id);
+      }
+      estado.uni = 'todas'; $('#uni').value = 'todas';
+      montaPicker(); render();
+      $('#chart').scrollIntoView({behavior:'smooth', block:'center'});
+    };
+  });
+  $('#mx-fim').textContent = DADOS.meta.ano_fim;
+}
+
+/* ---------- financeiro ---------- */
+function financeiro() {
+  const f = DADOS.financeiro;
+  const series = [
+    { rotulo:'LOA',     unidade:'R$', cor:css('--s1'), vals:f.loa },
+    { rotulo:'Despesa', unidade:'R$', cor:css('--s2'), vals:f.despesa },
+    { rotulo:'TLP',     unidade:'R$', cor:css('--s4'), vals:f.tlp }
+  ];
+  linhas('#fin', series, f.anos, {
+    h:380, r:110,
+    fy: v => 'R$ ' + nf.format(v/1e6) + ' mi',
+    ft: fmtRS
+  });
+  $('#fin-legend').innerHTML = series.map(s =>
+    `<li><span class="dot" style="background:${s.cor}"></span>${s.rotulo}</li>`).join('');
+  $('#fin-parcial').textContent = DADOS.meta.despesa_parcial;
+  $('#fin-desc').textContent =
+    `LOA, despesa executada e receita da TLP entre ${f.anos[0]} e ${f.anos[f.anos.length-1]}, em reais correntes.`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  $('#m-abs').setAttribute('aria-pressed', estado.modo === 'abs');
+  $('#m-idx').setAttribute('aria-pressed', estado.modo === 'idx');
+  $('#m-tab').setAttribute('aria-pressed', estado.tabela);
+  $('#m-tab').textContent = estado.tabela ? 'Ocultar dados' : 'Mostrar dados';
+
+  const series = preparar();
+  const anos = DADOS.anos.filter(a => a >= estado.de && a <= estado.ate);
+  const unidades = [...new Set(series.map(s => s.unidade))];
+  const misto = unidades.length > 1;
+
+  // unidades diferentes nao dividem eixo. Em vez de eixo duplo, indice.
+  if (misto && estado.modo === 'abs') {
+    $('#explorer-sub').innerHTML =
+      `<strong>Séries em unidades diferentes (${unidades.join(', ')}).</strong> ` +
+      `Um eixo só não as compara — use <em>Índice 100</em>, ou filtre por unidade.`;
+  } else if (estado.modo === 'idx') {
+    $('#explorer-sub').textContent =
+      `Cada série vale 100 no seu primeiro ano publicado dentro do período. Compara ritmo, não tamanho.`;
+  } else {
+    $('#explorer-sub').textContent =
+      `Valores absolutos em ${DADOS.unidades[unidades[0]] || unidades[0] || '—'}.`;
+  }
+
+  const ft = estado.modo === 'idx' ? (v => v==null?'—':nf1.format(v)) : fmt;
+  const fy = ft;
+
+  linhas('#chart', misto && estado.modo === 'abs' ? [] : series, anos, {h:420, r:150, fy, ft});
+  tabela(series, anos, ft);
+
+  $('#legend').innerHTML = series.map(s =>
+    `<li><span class="dot" style="background:${s.cor}"></span>${s.rotulo} <span class="na">(${s.unidade})</span></li>`).join('');
+
+  const avisos = [...new Set(series.filter(s => porId[s.id].alerta).map(s => porId[s.id].alerta))];
+  $('#alertas').innerHTML = avisos.length
+    ? avisos.map(a => `<p class="note"><span class="warn">!</span> <strong>Atenção:</strong> ${a}. Confira o dicionário antes de citar o número.</p>`).join('')
+    : '';
+
+  $('#chart-desc').textContent = series.length
+    ? `${series.map(s=>s.rotulo).join(', ')}, de ${anos[0]} a ${anos[anos.length-1]}.` +
+      (estado.modo==='idx' ? ' Escala em índice, primeiro ano = 100.' : '')
+    : '';
+}
+
+kpis();
+montaControles();
+montaDropdown();
+montaPicker();
+matriz();
+financeiro();
+render();
+addEventListener('resize', () => { render(); financeiro(); });
+</script>

@@ -1,0 +1,175 @@
+---
+title: "A coleta seletiva do DF triplicou em cinco anos"
+subtitle: "E a série tem uma armadilha em 2017 que faz o crescimento parecer maior do que é"
+date: today
+categories: [dados abertos, resíduos sólidos, coleta seletiva, série histórica]
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(arrow); library(dplyr)
+source(here::here("code", "tema_visual.R"))
+painel <- read_parquet(here::here("dados", "slu_painel.parquet"))
+seletiva <- painel |> filter(atividade_id == "coleta_seletiva") |> arrange(ano)
+```
+
+Em 2020, o Distrito Federal coletou 18.311 toneladas de recicláveis. Em 2025,
+coletou 54.549. É um crescimento de 198% em cinco anos — a curva mais consistente
+de toda a série de indicadores do SLU.
+
+```{r}
+#| label: fig-seletiva
+#| echo: false
+#| fig-cap: "Coleta seletiva no DF, em toneladas por ano (2014–2025)"
+
+# Os dois trechos entram como series SEPARADAS, de proposito: ligá-los com uma
+# linha continua afirmaria visualmente a continuidade que o texto nega.
+antigo <- filter(seletiva, ano <= 2016)
+atual  <- filter(seletiva, ano >= 2017)
+
+serie_traco <- function(p, d, nome, cor) {
+  add_trace(p, data = d, x = ~ano, y = ~valor, name = nome,
+            type = "scatter", mode = "lines+markers",
+            line = list(color = cor, width = 2),
+            marker = list(color = cor, size = 8,
+                          line = list(color = "rgba(255,255,255,0.9)", width = 2)),
+            hovertemplate = paste0("%{y:,.0f} t<extra>", nome, "</extra>"))
+}
+
+# nomes curtos: a legenda do plotly trunca sem avisar, e o nome longo tambem
+# alarga demais o tooltip unificado
+p <- plot_ly() |>
+  serie_traco(antigo, "Coleta seletiva (até 2016)", unname(CORES["s1"])) |>
+  serie_traco(atual,  "Só empresas (2017–2025)", unname(CORES["s2"])) |>
+  layout(shapes = list(list(
+    type = "rect", xref = "x", yref = "paper",
+    x0 = 2013.4, x1 = 2016.6, y0 = 0, y1 = 1,
+    fillcolor = "rgba(138,138,133,0.10)", line = list(width = 0), layer = "below"
+  )))
+
+p <- rotulo_final(p, 2016, antigo$valor[antigo$ano == 2016],
+                  "outra medida", unname(CORES["s1"]))
+grafico(p, y_titulo = "toneladas")
+```
+
+Antes de comemorar, a parte chata.
+
+## A armadilha de 2017
+
+Olhando o gráfico inteiro, a primeira coisa que salta é que 2014 e 2015 são
+*mais altos* que 2020. A série marca 48.586 t em 2014, sobe para 57.496 t em
+2015, e depois despenca para 29.968 t em 2017.
+
+Se você contar essa história como está, a manchete é "a coleta seletiva do DF
+caiu 48% e só agora se recuperou". Seria falso.
+
+O que muda em 2017 é o que entra na conta. Nos relatórios recentes, a linha nem
+se chama mais "coleta seletiva" — chama-se **"coleta seletiva das empresas"**. O
+número passou a medir o que as empresas contratadas recolhem, e não o total que
+circula pelo sistema, que incluía o material triado nas usinas e o trabalho das
+organizações de catadores.
+
+Não achei, em nenhum dos doze relatórios, uma nota explicando essa troca. Ela se
+deduz do rótulo e da magnitude.
+
+Então a série tem dois trechos que **não se somam**:
+
+| Período | Rótulo | Faixa |
+|---|---|---|
+| 2014–2016 | "Coleta seletiva" | 48,6 a 57,5 mil t |
+| 2017–2025 | "Coleta seletiva das empresas" | 18,3 a 54,5 mil t |
+
+Toda comparação honesta fica dentro de um dos dois blocos.
+
+## Dentro do bloco que dá para comparar
+
+Com 2017 como ponto de partida, o crescimento continua notável, e agora é
+defensável:
+
+```{r}
+#| label: tbl-crescimento
+#| echo: false
+
+seletiva |>
+  filter(ano >= 2017) |>
+  mutate(variacao_pct = 100 * (valor / lag(valor) - 1)) |>
+  select(ano, toneladas = valor, variacao_pct) |>
+  mutate(ano = as.integer(ano)) |>
+  tabela(
+    titulo    = "Coleta seletiva das empresas, ano a ano",
+    subtitulo = "Dentro do único bloco que é comparável consigo mesmo"
+  ) |>
+  cols_label(ano = "Ano", toneladas = "Toneladas",
+             variacao_pct = "Variação no ano") |>
+  fmt_integer(columns = ano, use_seps = FALSE) |>
+  fmt_number(columns = toneladas, decimals = 0,
+             sep_mark = ".", dec_mark = ",") |>
+  fmt_number(columns = variacao_pct, decimals = 1, sep_mark = ".",
+             dec_mark = ",", force_sign = TRUE, pattern = "{x}%") |>
+  sub_missing(columns = variacao_pct, missing_text = "—") |>
+  # verde sobe, rosa desce: o sinal da variacao e o unico dado categorico aqui
+  tab_style(style = cell_text(color = CORES[["s2"]], weight = "600"),
+            locations = cells_body(columns = variacao_pct,
+                                   rows = !is.na(variacao_pct) & variacao_pct > 0)) |>
+  tab_style(style = cell_text(color = CORES[["s3"]], weight = "600"),
+            locations = cells_body(columns = variacao_pct,
+                                   rows = !is.na(variacao_pct) & variacao_pct < 0)) |>
+  tab_source_note("De 2021 a 2025 são cinco altas consecutivas.")
+```
+
+De 29.968 t (2017) para 54.549 t (2025): **+82% em oito anos**. E o mais
+interessante não é a média, é o formato da curva. Ela cai até 2020, encontra o
+fundo na pandemia (18.311 t, uma queda de 36% num único ano) e desde então sobe
+em todos os anos, sem exceção:
+
+- 2021: +74%
+- 2022: +6%
+- 2023: +32%
+- 2024: +9%
+- 2025: +12%
+
+Uma sequência de cinco altas consecutivas não é ruído. Alguma coisa mudou na
+operação.
+
+## O que a série não diz
+
+Aqui eu preciso parar, porque a tentação é explicar o crescimento — e os dados
+que baixei não sustentam explicação.
+
+Os relatórios registram a expansão da coleta seletiva porta a porta, a entrada de
+novas cooperativas de catadores em contrato, e a instalação de papa-recicláveis.
+Qualquer uma dessas coisas pode ser a causa. Mas as tabelas que permitiriam
+testar isso — tonelagem por cooperativa, por região administrativa, por ano —
+existem de forma esparsa e inconsistente ao longo dos doze PDFs. Achei quatro
+tabelas com número de catadores em toda a série, cobrindo 2014, 2017 e 2018.
+
+Também não dá para calcular a **taxa de recuperação**, que é o número que
+realmente importa: quanto do resíduo gerado vira reciclável de fato. Para isso
+seria preciso a composição gravimétrica do lixo do DF, e ela aparece em texto
+corrido em alguns relatórios, sem tabela extraível.
+
+Fica registrado o que dá para afirmar: a quantidade recolhida pelas empresas
+cresceu, de forma consistente, por cinco anos. E fica registrado o que não dá:
+por quê, e se isso representa uma fração maior do lixo total.
+
+## Uma nota sobre denominador
+
+Uma última precaução. No mesmo período, a coleta domiciliar e comercial **caiu**:
+844.186 t em 2014, 724.393 t em 2025. Com população maior.
+
+Isso significa que a seletiva cresceu sobre um total menor — o que, se tudo mais
+for igual, torna o avanço proporcionalmente ainda maior. Mas "se tudo mais for
+igual" é a expressão mais perigosa da estatística aplicada, e a queda da coleta
+domiciliar tem candidatos a explicação que nada têm a ver com geração de lixo:
+maior rigor na pesagem, informatização das balanças, mudanças no perímetro do que
+o SLU coleta diretamente.
+
+Esse é assunto para outro artigo. Aqui basta dizer: os dois números se movem em
+direções opostas, e nenhum dos dois é tão simples quanto parece.
+
+---
+
+*Série completa, código e ressalvas em
+[Relatórios Anuais do SLU/DF](../README.md). Fonte primária:
+[relatórios anuais do SLU](https://www.slu.df.gov.br/relatorios), 2014 a 2025.*

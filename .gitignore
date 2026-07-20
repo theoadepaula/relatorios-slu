@@ -1,0 +1,25 @@
+# Saida de build do Quarto -- reproduzivel, nao versionar
+_site/
+_freeze/
+.quarto/
+*_files/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# SO
+Thumbs.db
+.DS_Store
+
+# 12 PDFs dos relatorios anuais: 160 MB, publicos em slu.df.gov.br/relatorios.
+# Reproduza com code/00_baixar.py; os checksums ficam versionados.
+dados_brutos/
+
+# dados/tabelas_brutas/ (2.010 CSVs, 5,1 MB) FICA versionado, de proposito.
+# Sao a saida da extracao dos PDFs. Como os PDFs (160 MB) nao entram no repo,
+# sem estes arquivos ninguem consegue auditar a extracao sem rebaixar tudo --
+# e auditar a extracao e justamente o assunto do artigo 02.
+# 5,1 MB e barato demais para abrir mao disso.

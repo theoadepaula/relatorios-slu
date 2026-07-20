@@ -1,0 +1,225 @@
+---
+title: "A série histórica que encolheu sem nota de rodapé"
+subtitle: "Doze linhas somem ao longo de doze relatórios anuais — seis aos poucos, seis de uma vez. E o problema não é do órgão que estudei: é de quase todo mundo que publica série histórica."
+date: today
+categories: [dados abertos, setor público, série histórica, resíduos sólidos]
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(arrow); library(dplyr)
+source(here::here("code", "tema_visual.R"))
+painel <- read_parquet(here::here("dados", "slu_painel.parquet"))
+serie  <- readr::read_csv2(here::here("dados", "slu_serie_historica.csv"))
+```
+
+Todo relatório anual do Serviço de Limpeza Urbana do Distrito Federal traz uma
+tabela chamada "Série Histórica dos Quantitativos Alcançados na Execução dos
+Serviços". É a página que um jornalista com pressa procuraria: uma linha por
+atividade, uma coluna por ano, tudo já comparado.
+
+Escolhi essa série justamente porque ela é boa: doze anos publicados sem falha,
+em formato estável, por um órgão que divulga tudo em PDF aberto. É por ser boa
+que ela serve para mostrar um problema que quase toda série histórica do setor
+público tem — e que não aparece enquanto se lê um relatório de cada vez.
+
+Baixei os doze, de 2014 a 2025, e coloquei as tabelas lado a lado. Não para
+conferir os números, mas para ver quais linhas atravessavam a década inteira.
+
+Doze não atravessaram. E, o que me interessou mais, não sumiram do mesmo jeito.
+
+## O inventário das ausências
+
+```{r}
+#| label: tbl-ausencias
+#| echo: false
+
+painel |>
+  group_by(atividade_id, atividade_rotulo) |>
+  summarise(primeiro = min(ano), ultimo = max(ano), n = n(), .groups = "drop") |>
+  filter(ultimo < 2025) |>
+  arrange(ultimo, atividade_rotulo) |>
+  select(atividade_rotulo, primeiro, ultimo, n) |>
+  tabela(
+    titulo    = "Atividades que somem da série histórica",
+    subtitulo = "Última aparição anterior a 2025, entre os doze relatórios"
+  ) |>
+  cols_label(atividade_rotulo = "Atividade", primeiro = "Primeiro ano",
+             ultimo = "Último ano", n = "Anos com dado") |>
+  fmt_integer(columns = c(primeiro, ultimo), use_seps = FALSE) |>
+  cols_align("left", columns = atividade_rotulo) |>
+  # a poda de 2024 e o achado que a tabela revela: seis linhas caem de uma vez
+  tab_style(style = cell_fill(color = "#eda100", alpha = 0.16),
+            locations = cells_body(rows = ultimo == 2023)) |>
+  tab_source_note("Destacadas em âmbar: as que desaparecem juntas na edição de 2024.")
+```
+
+Seis saem uma a uma, entre 2018 e 2021, cada uma com sua história
+administrativa:
+
+| Atividade | Última aparição | O que aconteceu |
+|---|---|---|
+| Catação de resíduos | 2018 | Muda de unidade (hectares → equipe) e depois some |
+| Transporte de chorume | 2019 | Vira "tratamento de chorume", outra medida |
+| Lavagem de abrigos de passageiros | 2019 | Absorvida em "lavagem de vias" |
+| Serviços diversos | 2019 | Categoria residual, extinta sem substituta |
+| Resíduos domiciliares aterrados | 2021 | Substituída por "aterrado no ASB" |
+| Coleta de resíduos de serviços de saúde | 2021 | Mudança de contrato altera o que se conta |
+
+Nenhuma dessas linhas foi encerrada com nota de rodapé dizendo "a partir deste
+ano não medimos mais isto". Elas simplesmente não estão na tabela do ano
+seguinte. Quem só olha o relatório mais recente não tem como saber que existiram.
+
+As outras seis — em âmbar na tabela acima — são um caso diferente, e eu só as
+enxerguei porque empilhei os doze relatórios.
+
+## A poda de 2024
+
+As seis restantes não saem uma a uma. Elas param todas no mesmo ano, 2023, o que
+é padrão demais para ser coincidência de operação.
+
+E não é. O que muda não é o serviço, é a tabela. Os relatórios de 2019 a 2023
+publicam **20 atividades** na série histórica. O de 2024 publica **13**. O de
+2025, **12**.
+
+São sete linhas que saem de uma vez, e nenhuma entra no lugar: catação de papel
+em áreas verdes, retirada de entulho dos PEVs, lavagem de vias, limpeza de
+equipamentos e bens públicos, pintura de meios-fios, transferência de resíduos e
+transporte de chorume.
+
+Seis delas ainda estavam vivas — tinham número novo em 2023. A sétima, transporte
+de chorume, é um caso à parte que vale registrar: ela vinha sendo republicada
+desde 2019 **com o mesmo dado parado**, uma linha que ocupava espaço na série sem
+medir nada havia quatro anos. Some junto com as outras seis.
+
+Os serviços não pararam: continuou-se varrendo, pintando meios-fios e
+transferindo resíduos em 2024. O que mudou foi a tabela, que passou a caber em
+treze linhas.
+
+E aqui está o ponto que interessa, porque ele não é sobre este relatório:
+**não há nota dizendo o que aconteceu com as sete linhas** — e é provável que
+não haja porque essa nota não é atribuição de ninguém. Alguém define o conteúdo
+da tabela; ninguém tem, no fluxo de trabalho, a tarefa de registrar que o
+conteúdo mudou. A lacuna é de processo, não de intenção.
+
+O efeito prático recai sobre quem usa o dado depois. Uma linha que some sozinha
+levanta suspeita. Sete que somem juntas, numa tabela que continua se chamando
+"série histórica", parecem apenas uma tabela menor.
+
+## A única que se explicou
+
+Há uma exceção, e ela merece crédito. A linha de resíduos de serviços de saúde
+some depois de 2021, mas o relatório de 2022 traz um asterisco:
+
+> Com a mudança na contratação da coleta de RSS (Ata SRP), os dados informados a
+> partir de março de 2021 incluem apenas RSS coletados nas instalações do SLU.
+
+Isso é exatamente o que uma série histórica precisa. O número cai de 3.130
+toneladas (2020) para 507 (2021) e depois para 0,7 (2022) — uma queda de 99,98%
+que, sem a nota, pareceria o colapso da coleta hospitalar do Distrito Federal.
+Não é. É a mesma coleta, medida em outro perímetro.
+
+Ou seja: a explicação existiu, e é exemplar. O que falta não é disposição para
+explicar — é um lugar onde a explicação viaje junto com o número, em vez de
+ficar num asterisco de uma edição só.
+
+## Por que isso importa mais do que parece
+
+Quando uma linha desaparece, o efeito prático é que o passado fica melhor ou pior
+do que foi, dependendo de quem estiver contando a história.
+
+Peguem "resíduos domiciliares aterrados" contra "aterrado no ASB". As duas linhas
+convivem entre 2017 e 2021 — e a relação entre elas muda no meio do caminho:
+
+```{r}
+#| label: fig-aterro
+#| echo: false
+#| fig-cap: "Duas linhas, dois perímetros, o mesmo aterro"
+
+aterro <- painel |>
+  filter(atividade_id %in% c("domiciliar_aterrado", "aterrado_asb")) |>
+  arrange(ano)
+
+ids    <- c("domiciliar_aterrado", "aterrado_asb")
+# rotulo curto so para o texto colado na ponta da linha; o nome inteiro fica
+# na legenda e no tooltip
+curtos <- c("domiciliares", "ASB")
+
+p <- plot_ly()
+for (i in seq_along(ids)) {
+  aid <- ids[i]
+  d   <- filter(aterro, atividade_id == aid)
+  cor <- unname(CORES[i])
+  p <- add_trace(p, data = d, x = ~ano, y = ~valor, name = d$atividade_rotulo[1],
+                 type = "scatter", mode = "lines+markers",
+                 line = list(color = cor, width = 2),
+                 marker = list(color = cor, size = 8,
+                               line = list(color = "rgba(255,255,255,0.9)", width = 2)),
+                 hovertemplate = paste0("%{y:,.0f} t<extra>",
+                                        d$atividade_rotulo[1], "</extra>"))
+  ultimo <- slice_max(d, ano, n = 1)
+  p <- rotulo_final(p, ultimo$ano, ultimo$valor, curtos[i], cor)
+}
+grafico(p, y_titulo = "toneladas")
+```
+
+Em 2017, "domiciliares aterrados" marca 809.085 t e "aterrado no ASB" marca
+252.703 t. Um número é três vezes o outro, no mesmo ano, no mesmo relatório. Não
+há erro: o DF estava encerrando o Aterro Controlado do Jóquei e abrindo o Aterro
+Sanitário de Brasília. Parte do resíduo ia para um, parte para o outro.
+
+Em 2018 as duas já quase se encostam. E a partir de 2019 param de ser duas
+medidas: marcam **800.872 t as duas**, o mesmo número até a última tonelada. Em
+2020 diferem em 1 t; em 2021, em 18 t.
+
+Isso não é coincidência nem erro de arredondamento — é o Jóquei terminando de
+fechar. Quando todo o resíduo domiciliar do DF passa a ir para o Aterro Sanitário
+de Brasília, "resíduos domiciliares aterrados" e "aterrado no ASB" viram a mesma
+frase dita de dois jeitos. Manter as duas linhas deixa de fazer sentido, e a
+partir de 2022 só sobrevive a do ASB.
+
+Das doze ausências, essa é a que se explica sozinha: a série mostra as duas
+linhas se fundindo antes de uma delas sair. Quem empilha os relatórios enxerga o
+motivo sem precisar de nota. Quem lê só o de 2022 não enxerga nada — e nota,
+também aqui, não houve.
+
+E a armadilha continua de pé para quem chega depois. Quem montar a série pegando
+"o aterro" ano a ano vai encontrar um salto de 252 mil para 749 mil toneladas
+entre 2017 e 2018 e concluir que o DF triplicou a produção de lixo em doze meses.
+
+Não triplicou. O lixo mudou de endereço.
+
+## O que dá para fazer com isso
+
+Nada aqui é denúncia. Tudo que usei é público, está em PDF no site do órgão, e a
+maior parte das mudanças tem explicação administrativa banal: trocou o contrato,
+mudou a unidade de medição, unificou-se o serviço. O órgão que escolhi estudar
+publica mais, e por mais tempo, que muitos.
+
+A questão é outra, e vale para qualquer instituição que publique série
+histórica: **a continuidade de uma série é uma decisão, não uma consequência.**
+Alguém escolhe manter a linha, ou escolhe não manter. Mas essa escolha quase
+nunca é registrada — não por descuido, e sim porque registrá-la não está no
+fluxo de trabalho de ninguém. E como quase ninguém empilha doze relatórios para
+conferir, ela passa despercebida por anos.
+
+O conserto é barato. Uma coluna a mais na tabela — não com um número, com uma
+frase: *o que mudou na forma de medir isto desde o ano passado.* Ou, mais simples
+ainda, uma nota quando uma linha entra e outra quando uma linha sai.
+
+Quem produz a série dentro de um órgão dificilmente enxerga o problema, porque vê
+uma edição por vez, e cada edição isolada está correta. Quem olha de fora
+enxerga, mas não tem como corrigir. O buraco fica exatamente no meio — e é por
+isso que apontar de fora só resolve se alguém puder levar para dentro.
+
+Daí o convite, que é a parte útil deste texto: se você trabalha com dados em
+algum órgão, empilhe as últimas edições da série que você publica e conte quantas
+linhas atravessaram inteiras. É uma tarde de trabalho, e costuma render uma
+conversa boa com quem produz a tabela.
+
+---
+
+*Dados, scripts e ressalvas em [Relatórios Anuais do SLU/DF](../README.md).
+Fonte primária: [relatórios anuais do SLU](https://www.slu.df.gov.br/relatorios),
+2014 a 2025.*

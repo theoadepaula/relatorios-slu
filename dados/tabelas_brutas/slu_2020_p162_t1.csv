@@ -1,0 +1,23 @@
+﻿PRIORIDADE;ID;NECESSIDADE;ÁREA
+1º;N1;Licenciamento do Firewall;Infraestrutura e Redes
+;N2;Segurança Eletrônica para o Aterro Sanitário e Núcleos de Pesagem;Infraestrutura e Redes
+2º;N3;Conexão de internet/VPN/MPLS;Infraestrutura e Redes
+;N4;Nobreak;Infraestrutura e Redes
+;N5;Rastreador GPS;Infraestrutura e Redes
+;N6;Contratar solução de antivírus para os computadores e servidores;Infraestrutura e Redes
+3º;N7;Ativos de Rede (Switch, Roteadores, Wi-Fi);Infraestrutura e Redes
+;N8;Contratação de empresa especializada na prestação de suporte técnico para o SLU;Infraestrutura e Redes
+;N9;Atualizar parque computacional;Infraestrutura e Redes
+;N10;Telefonia Longa Distância Nacional e Internacional;Infraestrutura e Redes
+;N11;Controle de acesso e ponto eletrônico;Sistemas e Software
+;N12;Sistemas para área meio;Sistemas e Software
+;N13;Softwares ArcGIS, AutoCAD, Volare, Microsoft Project, Compor90;Sistemas e Software
+4º;N14;Impressora para Crachá;Infraestrutura e Redes
+;N15;Ferramenta de Gestão de Projetos;Sistemas e Software
+;N16;WebCam;Infraestrutura e Redes
+;N17;Softwares de edição de imagens;Sistemas e Software
+5º;N18;Softwares de edição de vídeos;Sistemas e Software
+;N19;Telefonia Voip;Infraestrutura e Redes
+;N20;Capacitação dos Servidores do SLU;Capacitação
+;N21;Aquisição de totens de autoatendimento;Infraestrutura e Redes
+6º;N22;Adquirir mesa digitalizadora para desenho com caneta sensível à pressão e digitalizador de mão para criação de pdf;Infraestrutura e Redes

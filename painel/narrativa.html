@@ -1,0 +1,547 @@
+<title>Limpeza urbana do DF em 12 relatórios</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --plane:      #f9f9f7;
+    --surface:    #fcfcfb;
+    --ink:        #0b0b0b;
+    --ink-2:      #52514e;
+    --muted:      #898781;
+    --grid:       #e1e0d9;
+    --axis:       #c3c2b7;
+    --ring:       rgba(11,11,11,0.10);
+    --s1:         #2a78d6;
+    --s2:         #008300;
+    --s3:         #e87ba4;
+    --s4:         #eda100;
+    --tip-bg:     #0b0b0b;
+    --tip-ink:    #fcfcfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --plane:   #0d0d0d;
+      --surface: #1a1a19;
+      --ink:     #ffffff;
+      --ink-2:   #c3c2b7;
+      --muted:   #898781;
+      --grid:    #2c2c2a;
+      --axis:    #383835;
+      --ring:    rgba(255,255,255,0.10);
+      --s1:      #3987e5;
+      --s2:      #008300;
+      --s3:      #d55181;
+      --s4:      #c98500;
+      --tip-bg:  #fcfcfb;
+      --tip-ink: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --plane:   #0d0d0d;
+    --surface: #1a1a19;
+    --ink:     #ffffff;
+    --ink-2:   #c3c2b7;
+    --muted:   #898781;
+    --grid:    #2c2c2a;
+    --axis:    #383835;
+    --ring:    rgba(255,255,255,0.10);
+    --s1:      #3987e5;
+    --s2:      #008300;
+    --s3:      #d55181;
+    --s4:      #c98500;
+    --tip-bg:  #fcfcfb;
+    --tip-ink: #0b0b0b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--plane);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    font-weight: 680;
+    text-wrap: balance;
+    margin: 0.5rem 0 0;
+  }
+
+  .standfirst {
+    font-size: clamp(1rem, 2vw, 1.12rem);
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0.85rem 0 0;
+  }
+
+  /* --- ornamento do hero: a propria serie da coleta seletiva --- */
+  .ornament {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--grid);
+    border-bottom: 1px solid var(--grid);
+    padding: 1.25rem 0 0.5rem;
+  }
+  .ornament figcaption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1px;
+    background: var(--grid);
+    border: 1px solid var(--grid);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .tile {
+    background: var(--surface);
+    padding: 1.05rem 1.15rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+  }
+  .tile dt {
+    font-size: 0.74rem;
+    color: var(--ink-2);
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+  .tile dd {
+    margin: 0;
+    font-size: 1.72rem;
+    font-weight: 640;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .tile .unit { font-size: 0.82rem; font-weight: 500; color: var(--ink-2); }
+  .tile .delta { font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--ring);
+    border-radius: 3px;
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .card h2 {
+    font-size: 1.06rem;
+    font-weight: 640;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .card .note {
+    font-size: 0.83rem;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.1rem;
+    font-size: 0.8rem;
+    color: var(--ink-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .legend li { display: flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 0.7rem; height: 0.7rem; border-radius: 2px; flex: none; }
+
+  .plot { position: relative; width: 100%; }
+  .plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .tip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--tip-bg);
+    color: var(--tip-ink);
+    font-size: 0.76rem;
+    line-height: 1.45;
+    padding: 0.45rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 90ms linear;
+    z-index: 5;
+    font-variant-numeric: tabular-nums;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { font-weight: 640; }
+
+  details {
+    border-top: 1px solid var(--grid);
+    padding-top: 0.7rem;
+  }
+  summary {
+    font-size: 0.8rem;
+    color: var(--ink-2);
+    cursor: pointer;
+    width: fit-content;
+  }
+  summary:focus-visible { outline: 2px solid var(--s1); outline-offset: 3px; border-radius: 2px; }
+  .scroller { overflow-x: auto; margin-top: 0.7rem; }
+  table { border-collapse: collapse; font-size: 0.8rem; width: 100%; }
+  th, td {
+    text-align: right;
+    padding: 0.3rem 0.7rem;
+    border-bottom: 1px solid var(--grid);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--ink-2); font-weight: 600; }
+
+  .caveat {
+    border-left: 2px solid var(--s4);
+    padding: 0.1rem 0 0.1rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .caveat p { margin: 0; }
+  .caveat strong { color: var(--ink); font-weight: 620; }
+
+  footer {
+    font-size: 0.8rem;
+    color: var(--muted);
+    border-top: 1px solid var(--grid);
+    padding-top: 1.1rem;
+  }
+  footer a { color: inherit; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Serviço de Limpeza Urbana do Distrito Federal · 2014–2025</p>
+    <h1>O que doze relatórios anuais dizem sobre o lixo do DF</h1>
+    <p class="standfirst">
+      Painel construído a partir dos relatórios anuais de atividades do SLU — 1.704 páginas de PDF
+      transformadas em série histórica auditável. Cada número aqui foi conferido contra até nove
+      publicações independentes do próprio órgão.
+    </p>
+
+    <figure class="ornament" id="orn">
+      <figcaption>Coleta seletiva no DF, em toneladas por ano — a série que abre o painel</figcaption>
+      <div class="plot" data-chart="ornamento"></div>
+    </figure>
+  </header>
+
+  <dl class="tiles" id="tiles"></dl>
+
+  <section class="card">
+    <h2>A coleta seletiva triplicou desde 2020</h2>
+    <p class="note">
+      De 18,3 mil toneladas em 2020 — o piso da pandemia — para 54,5 mil em 2025. É o crescimento mais
+      consistente de toda a série.
+    </p>
+    <div class="plot" data-chart="seletiva"></div>
+    <div class="caveat">
+      <p><strong>Quebra de metodologia em 2017.</strong> A série cai de 48.673 t (2016) para 29.968 t (2017).
+      Não é colapso do serviço: muda o que é contabilizado — os relatórios recentes chamam a linha de
+      “coleta seletiva das empresas”. Os dois trechos não formam uma série contínua.</p>
+    </div>
+    <details>
+      <summary>Ver tabela</summary>
+      <div class="scroller" data-table="seletiva"></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Para onde vai o resíduo: aterro e usinas</h2>
+    <p class="note">
+      Volume aterrado no Aterro Sanitário de Brasília e volume processado nas usinas de tratamento.
+    </p>
+    <ul class="legend" data-legend="destino"></ul>
+    <div class="plot" data-chart="destino"></div>
+    <div class="caveat">
+      <p><strong>O salto de 2018 é transição, não geração.</strong> O aterrado no ASB vai de 252.703 t (2017)
+      para 749.608 t (2018) porque o DF encerrava o Aterro Controlado do Jóquei e migrava para o Aterro
+      Sanitário. O lixo não triplicou — mudou de endereço.</p>
+    </div>
+    <details>
+      <summary>Ver tabela</summary>
+      <div class="scroller" data-table="destino"></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>A varrição mecanizada quintuplicou; a manual não saiu do lugar</h2>
+    <p class="note">
+      Quilômetros varridos por ano. A mecanizada sai de 41 mil km (2017) para 213 mil km (2025), enquanto
+      a manual oscila em torno de 1,05 milhão de km. Substituição tecnológica visível no dado.
+    </p>
+    <ul class="legend" data-legend="varricao"></ul>
+    <div class="plot" data-chart="varricao"></div>
+    <details>
+      <summary>Ver tabela</summary>
+      <div class="scroller" data-table="varricao"></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>A despesa cresce mais rápido que a taxa que a financia</h2>
+    <p class="note">
+      Receita prevista na LOA, despesa executada e arrecadação da Taxa de Limpeza Pública, em reais
+      correntes. A TLP cobre parcela decrescente do custo do serviço.
+    </p>
+    <ul class="legend" data-legend="financeiro"></ul>
+    <div class="plot" data-chart="financeiro"></div>
+    <div class="caveat">
+      <p><strong>Valores nominais.</strong> Nada aqui está deflacionado. Numa série de 20 anos, boa parte do
+      crescimento aparente é inflação — deflacione pelo IPCA antes de concluir qualquer coisa sobre custo real.</p>
+      <p><strong>2025 é ano aberto.</strong> A despesa executada de 2025 (R$ 202,4 mi contra R$ 620,8 mi em 2024)
+      é parcial no momento da publicação do relatório. A linha de despesa termina em 2024 de propósito.</p>
+    </div>
+    <details>
+      <summary>Ver tabela</summary>
+      <div class="scroller" data-table="financeiro"></div>
+    </details>
+  </section>
+
+  <footer>
+    Fonte: relatórios anuais de atividades do SLU/DF, 2014 a 2025 —
+    <a href="https://www.slu.df.gov.br/relatorios">slu.df.gov.br/relatorios</a>.
+    Extração, validação cruzada e consolidação por Théo Albuquerque. Divergências entre relatórios:
+    15 pontos em 267, todas documentadas no dicionário de dados.
+  </footer>
+
+</div>
+
+<script>
+const DADOS = {"series":{"coleta_seletiva":[{"ano":2014,"valor":48586.0},{"ano":2015,"valor":57496.0},{"ano":2016,"valor":48673.0},{"ano":2017,"valor":29968.0},{"ano":2018,"valor":28549.0},{"ano":2019,"valor":28522.0},{"ano":2020,"valor":18311.03},{"ano":2021,"valor":31865.72},{"ano":2022,"valor":33761.43},{"ano":2023,"valor":44681.4},{"ano":2024,"valor":48852.75},{"ano":2025,"valor":54549.0}],"coleta_domiciliar_comercial":[{"ano":2014,"valor":844186.0},{"ano":2015,"valor":843217.0},{"ano":2016,"valor":818771.0},{"ano":2017,"valor":828765.0},{"ano":2018,"valor":800685.0},{"ano":2019,"valor":782125.0},{"ano":2020,"valor":786122.0},{"ano":2021,"valor":729082.7},{"ano":2022,"valor":696995.94},{"ano":2023,"valor":710679.23},{"ano":2024,"valor":730174.41},{"ano":2025,"valor":724393.0}],"aterrado_asb":[{"ano":2017,"valor":252703.0},{"ano":2018,"valor":749608.0},{"ano":2019,"valor":800872.0},{"ano":2020,"valor":821089.0},{"ano":2021,"valor":760763.0},{"ano":2022,"valor":718554.0},{"ano":2023,"valor":743776.0},{"ano":2024,"valor":761311.0},{"ano":2025,"valor":773093.0}],"processado_usinas":[{"ano":2015,"valor":209121.0},{"ano":2016,"valor":229054.0},{"ano":2017,"valor":230916.0},{"ano":2018,"valor":238851.0},{"ano":2019,"valor":225357.0},{"ano":2020,"valor":228422.0},{"ano":2021,"valor":251348.0},{"ano":2022,"valor":274659.0},{"ano":2023,"valor":283402.0},{"ano":2024,"valor":302297.0},{"ano":2025,"valor":292481.0}],"varricao_manual":[{"ano":2014,"valor":1324175.0},{"ano":2015,"valor":1345889.0},{"ano":2016,"valor":1250559.0},{"ano":2017,"valor":1284173.0},{"ano":2018,"valor":1204297.0},{"ano":2019,"valor":1193036.0},{"ano":2020,"valor":1039063.1},{"ano":2021,"valor":1053705.3},{"ano":2022,"valor":1062528.2},{"ano":2023,"valor":1063007.3},{"ano":2024,"valor":1036909.8},{"ano":2025,"valor":1067450.0}],"varricao_mecanizada":[{"ano":2014,"valor":34741.0},{"ano":2015,"valor":25539.0},{"ano":2016,"valor":46723.0},{"ano":2017,"valor":41288.0},{"ano":2018,"valor":42187.0},{"ano":2019,"valor":61407.0},{"ano":2020,"valor":152814.3},{"ano":2021,"valor":171517.1},{"ano":2022,"valor":214002.1},{"ano":2023,"valor":213752.2},{"ano":2024,"valor":212779.1},{"ano":2025,"valor":213081.0}],"coleta_corretiva":[{"ano":2014,"valor":741750.0},{"ano":2015,"valor":706855.0},{"ano":2016,"valor":772268.0},{"ano":2017,"valor":636005.0},{"ano":2018,"valor":438079.0},{"ano":2019,"valor":425175.0},{"ano":2020,"valor":615760.8},{"ano":2021,"valor":612086.0},{"ano":2022,"valor":600048.4},{"ano":2023,"valor":651290.0},{"ano":2024,"valor":653934.6},{"ano":2025,"valor":678075.0}],"entulho_ure":[{"ano":2017,"valor":0.0},{"ano":2018,"valor":1303662.0},{"ano":2019,"valor":1423028.0},{"ano":2020,"valor":1589393.18},{"ano":2021,"valor":1466145.31},{"ano":2022,"valor":1485844.51},{"ano":2023,"valor":1507223.8},{"ano":2024,"valor":1599445.58},{"ano":2025,"valor":1450659.0}]},"orcamento":[{"ano":2011,"loa":323272152.0,"despesa":262768454.0},{"ano":2012,"loa":310685339.0,"despesa":361897714.0},{"ano":2013,"loa":389082954.0,"despesa":409233166.0},{"ano":2014,"loa":366068361.0,"despesa":443347285.0},{"ano":2015,"loa":346111997.0,"despesa":487197691.0},{"ano":2016,"loa":498067973.0,"despesa":495849555.0},{"ano":2017,"loa":472234656.0,"despesa":532513645.0},{"ano":2018,"loa":532116663.0,"despesa":547033386.0},{"ano":2019,"loa":534773833.0,"despesa":497348293.0},{"ano":2020,"loa":585489991.0,"despesa":531602486.0},{"ano":2021,"loa":547859303.0,"despesa":568336065.0},{"ano":2022,"loa":589308218.0,"despesa":686468543.0},{"ano":2023,"loa":685250423.0,"despesa":815790562.0},{"ano":2024,"loa":676314030.0,"despesa":620788954.0},{"ano":2025,"loa":712104967.0,"despesa":202366464.0}],"tlp":[{"ano":2005,"valor":60457462.85},{"ano":2006,"valor":67477330.4},{"ano":2007,"valor":89260199.0},{"ano":2008,"valor":88899388.98},{"ano":2009,"valor":90503558.73},{"ano":2010,"valor":98620587.56},{"ano":2011,"valor":106351621.97},{"ano":2012,"valor":113585231.56},{"ano":2013,"valor":133964473.0},{"ano":2014,"valor":130782508.7},{"ano":2015,"valor":145753320.0},{"ano":2016,"valor":155527079.0},{"ano":2017,"valor":161396446.0},{"ano":2018,"valor":163637281.0},{"ano":2019,"valor":183140330.0},{"ano":2020,"valor":182886863.0},{"ano":2021,"valor":205269385.0},{"ano":2022,"valor":152316184.0},{"ano":2023,"valor":180915343.0},{"ano":2024,"valor":173082803.0},{"ano":2025,"valor":194965107.0}]};
+
+const fmt = (n, d = 0) => n.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const fmtC = n => n >= 1e9 ? (n / 1e9).toLocaleString("pt-BR", { maximumFractionDigits: 2 }) + " bi"
+               : n >= 1e6 ? (n / 1e6).toLocaleString("pt-BR", { maximumFractionDigits: 0 }) + " mi"
+               : n >= 1e3 ? (n / 1e3).toLocaleString("pt-BR", { maximumFractionDigits: 0 }) + " mil"
+               : fmt(n);
+const SVGNS = "http://www.w3.org/2000/svg";
+const el = (n, a = {}) => { const e = document.createElementNS(SVGNS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+/* Um renderizador de linhas para todos os graficos.
+   spec: { series:[{nome,cor,pts:[{ano,valor}]}], unidade, fmtV, altura } */
+function linha(host, spec) {
+  const W = 760, H = spec.altura || 300;
+  const M = { t: 14, r: 18, b: 30, l: 58 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+
+  const todos = spec.series.flatMap(s => s.pts);
+  const anos = [...new Set(todos.map(p => p.ano))].sort((a, b) => a - b);
+  const x0 = Math.min(...anos), x1 = Math.max(...anos);
+  const vmax = Math.max(...todos.map(p => p.valor));
+  const y1 = vmax * 1.08;
+
+  const X = a => M.l + (x1 === x0 ? pw / 2 : (a - x0) / (x1 - x0) * pw);
+  const Y = v => M.t + ph - (v / y1) * ph;
+
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  svg.appendChild(el("title")).textContent = spec.titulo || "";
+
+  // grade horizontal + eixo y (hairlines solidas, recessivas)
+  const passos = 4;
+  for (let i = 0; i <= passos; i++) {
+    const v = y1 / passos * i, y = Y(v);
+    svg.appendChild(el("line", { x1: M.l, x2: M.l + pw, y1: y, y2: y,
+      stroke: i === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }));
+    const t = el("text", { x: M.l - 10, y: y + 4, "text-anchor": "end",
+      fill: "var(--muted)", "font-size": 11, "font-family": "system-ui, sans-serif" });
+    t.style.fontVariantNumeric = "tabular-nums";
+    t.textContent = fmtC(v);
+    svg.appendChild(t);
+  }
+
+  // eixo x
+  anos.forEach(a => {
+    if (anos.length > 12 && a % 2 !== 0 && a !== x1) return;
+    const t = el("text", { x: X(a), y: M.t + ph + 20, "text-anchor": "middle",
+      fill: "var(--muted)", "font-size": 11, "font-family": "system-ui, sans-serif" });
+    t.style.fontVariantNumeric = "tabular-nums";
+    t.textContent = a;
+    svg.appendChild(t);
+  });
+
+  // area sob a serie unica (o "ornamento"): so quando ha 1 serie
+  if (spec.series.length === 1 && spec.area) {
+    const s = spec.series[0], p = [...s.pts].sort((a, b) => a.ano - b.ano);
+    const d = `M ${X(p[0].ano)} ${Y(0)} ` + p.map(q => `L ${X(q.ano)} ${Y(q.valor)}`).join(" ") +
+              ` L ${X(p[p.length - 1].ano)} ${Y(0)} Z`;
+    svg.appendChild(el("path", { d, fill: s.cor, opacity: 0.12 }));
+  }
+
+  // linhas + marcadores
+  spec.series.forEach(s => {
+    const p = [...s.pts].sort((a, b) => a.ano - b.ano);
+    svg.appendChild(el("path", {
+      d: "M " + p.map(q => `${X(q.ano)} ${Y(q.valor)}`).join(" L "),
+      fill: "none", stroke: s.cor, "stroke-width": 2,
+      "stroke-linejoin": "round", "stroke-linecap": "round"
+    }));
+    p.forEach(q => {
+      // anel de 2px na cor da superficie separa marcadores sobrepostos
+      svg.appendChild(el("circle", { cx: X(q.ano), cy: Y(q.valor), r: 4.5,
+        fill: s.cor, stroke: "var(--surface)", "stroke-width": 2 }));
+    });
+    // rotulo direto no ultimo ponto (obrigatorio: contraste sub-3:1 em modo claro)
+    const u = p[p.length - 1];
+    const t = el("text", { x: X(u.ano) - 6, y: Y(u.valor) - 12, "text-anchor": "end",
+      fill: "var(--ink)", "font-size": 11.5, "font-weight": 640,
+      "font-family": "system-ui, sans-serif" });
+    t.textContent = (spec.fmtV || fmtC)(u.valor);
+    svg.appendChild(t);
+  });
+
+  // camada de hover: crosshair + tooltip, alvo por faixa vertical
+  const cross = el("line", { y1: M.t, y2: M.t + ph, stroke: "var(--axis)",
+    "stroke-width": 1, opacity: 0 });
+  svg.appendChild(cross);
+
+  const tip = document.createElement("div");
+  tip.className = "tip";
+  host.appendChild(tip);
+
+  anos.forEach(a => {
+    const meio = pw / Math.max(anos.length - 1, 1) / 2;
+    const faixa = el("rect", {
+      x: X(a) - meio, y: M.t, width: meio * 2, height: ph,
+      fill: "transparent", tabindex: 0, role: "button",
+      "aria-label": `${a}: ` + spec.series.map(s => {
+        const q = s.pts.find(z => z.ano === a);
+        return q ? `${s.nome} ${fmt(q.valor)}` : "";
+      }).filter(Boolean).join(", ")
+    });
+    const mostrar = () => {
+      cross.setAttribute("x1", X(a)); cross.setAttribute("x2", X(a));
+      cross.setAttribute("opacity", 1);
+      const linhas = spec.series.map(s => {
+        const q = s.pts.find(z => z.ano === a);
+        return q ? `<span style="color:${s.cor}">■</span> ${s.nome}: <b>${(spec.fmtV || fmtC)(q.valor)}</b>` : null;
+      }).filter(Boolean);
+      tip.innerHTML = `<b>${a}</b><br>${linhas.join("<br>")}`;
+      tip.classList.add("on");
+      const rel = X(a) / W * host.clientWidth;
+      tip.style.left = Math.min(Math.max(rel - tip.offsetWidth / 2, 0), host.clientWidth - tip.offsetWidth) + "px";
+      tip.style.top = "4px";
+    };
+    const esconder = () => { cross.setAttribute("opacity", 0); tip.classList.remove("on"); };
+    faixa.addEventListener("pointerenter", mostrar);
+    faixa.addEventListener("focus", mostrar);
+    faixa.addEventListener("pointerleave", esconder);
+    faixa.addEventListener("blur", esconder);
+    svg.appendChild(faixa);
+  });
+
+  host.appendChild(svg);
+}
+
+function tabela(host, spec) {
+  const anos = [...new Set(spec.series.flatMap(s => s.pts.map(p => p.ano)))].sort((a, b) => a - b);
+  const t = document.createElement("table");
+  t.innerHTML = "<thead><tr><th>Ano</th>" +
+    spec.series.map(s => `<th>${s.nome}${spec.unidade ? ` (${spec.unidade})` : ""}</th>`).join("") +
+    "</tr></thead><tbody>" +
+    anos.map(a => "<tr><th scope=\"row\">" + a + "</th>" +
+      spec.series.map(s => {
+        const q = s.pts.find(z => z.ano === a);
+        return `<td>${q ? fmt(q.valor, spec.dec || 0) : "—"}</td>`;
+      }).join("") + "</tr>").join("") +
+    "</tbody>";
+  host.appendChild(t);
+}
+
+function legenda(host, spec) {
+  host.innerHTML = spec.series.map(s =>
+    `<li><span class="swatch" style="background:${s.cor}"></span>${s.nome}</li>`).join("");
+}
+
+/* ---- especificacoes dos graficos ---- */
+const S = DADOS.series;
+const specs = {
+  ornamento: { area: true, altura: 210, unidade: "t",
+    series: [{ nome: "Coleta seletiva", cor: "var(--s2)", pts: S.coleta_seletiva }] },
+  seletiva: { area: true, altura: 300, unidade: "t",
+    series: [{ nome: "Coleta seletiva", cor: "var(--s2)", pts: S.coleta_seletiva }] },
+  destino: { altura: 300, unidade: "t", series: [
+    { nome: "Aterrado no ASB", cor: "var(--s1)", pts: S.aterrado_asb },
+    { nome: "Processado em usinas", cor: "var(--s2)", pts: S.processado_usinas }] },
+  varricao: { altura: 300, unidade: "km", series: [
+    { nome: "Varrição manual", cor: "var(--s1)", pts: S.varricao_manual },
+    { nome: "Varrição mecanizada", cor: "var(--s4)", pts: S.varricao_mecanizada }] },
+  financeiro: { altura: 320, unidade: "R$",
+    fmtV: v => "R$ " + fmtC(v),
+    series: [
+      { nome: "LOA — receita prevista", cor: "var(--s1)", pts: DADOS.orcamento.map(o => ({ ano: o.ano, valor: o.loa })) },
+      // despesa cortada em 2024: 2025 e execucao parcial, nao ano fechado
+      { nome: "Despesa executada", cor: "var(--s3)", pts: DADOS.orcamento.filter(o => o.ano <= 2024).map(o => ({ ano: o.ano, valor: o.despesa })) },
+      { nome: "Taxa de Limpeza Pública", cor: "var(--s4)", pts: DADOS.tlp }] }
+};
+
+document.querySelectorAll("[data-chart]").forEach(n => linha(n, specs[n.dataset.chart]));
+document.querySelectorAll("[data-table]").forEach(n => tabela(n, specs[n.dataset.table]));
+document.querySelectorAll("[data-legend]").forEach(n => legenda(n, specs[n.dataset.legend]));
+
+/* ---- stat tiles: resumo antes do detalhe ---- */
+const ult = s => s[s.length - 1];
+const acha = (s, a) => (s.find(p => p.ano === a) || {}).valor;
+const tiles = [
+  { r: "Coleta seletiva", v: ult(S.coleta_seletiva).valor, u: "t em 2025",
+    d: `×3,0 sobre 2020 (${fmt(acha(S.coleta_seletiva, 2020), 0)} t)` },
+  { r: "Coleta domiciliar e comercial", v: ult(S.coleta_domiciliar_comercial).valor, u: "t em 2025",
+    d: `−14% sobre 2014 (${fmtC(acha(S.coleta_domiciliar_comercial, 2014))} t)` },
+  { r: "Aterrado no Aterro Sanitário", v: ult(S.aterrado_asb).valor, u: "t em 2025",
+    d: "maior volume desde 2020" },
+  // cobertura sempre no mesmo ano: 2024 e o ultimo exercicio fechado
+  { r: "Taxa de Limpeza Pública", v: ult(DADOS.tlp).valor, u: "R$ em 2025",
+    d: (() => {
+      const o24 = DADOS.orcamento.find(o => o.ano === 2024);
+      const t24 = DADOS.tlp.find(t => t.ano === 2024).valor;
+      return `cobriu ${Math.round(t24 / o24.despesa * 100)}% da despesa em 2024`;
+    })() }
+];
+document.getElementById("tiles").innerHTML = tiles.map(t => `
+  <div class="tile">
+    <dt>${t.r}</dt>
+    <dd>${fmtC(t.v)} <span class="unit">${t.u}</span></dd>
+    <span class="delta">${t.d}</span>
+  </div>`).join("");
+</script>

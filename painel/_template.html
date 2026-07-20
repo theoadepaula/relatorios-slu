@@ -1,0 +1,540 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limpeza urbana do DF — explorador da série 2014–2025</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --plane:   #f9f9f7;
+    --surface: #fcfcfb;
+    --ink:     #0b0b0b;
+    --ink-2:   #52514e;
+    --muted:   #898781;
+    --grid:    #e1e0d9;
+    --axis:    #c3c2b7;
+    --ring:    rgba(11,11,11,0.10);
+    --field:   #ffffff;
+    --s1: #2a78d6; --s2: #008300; --s3: #e87ba4; --s4: #eda100;
+    --tip-bg:  #0b0b0b;
+    --tip-ink: #fcfcfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+      --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --ring: rgba(255,255,255,0.14); --field: #232322;
+      --s1: #3987e5; --s2: #008300; --s3: #d55181; --s4: #c98500;
+      --tip-bg: #fcfcfb; --tip-ink: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --plane: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --ring: rgba(255,255,255,0.14); --field: #232322;
+    --s1: #3987e5; --s2: #008300; --s3: #d55181; --s4: #c98500;
+    --tip-bg: #fcfcfb; --tip-ink: #0b0b0b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; background: var(--plane); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 68rem; margin: 0 auto;
+    padding: clamp(1.5rem,4vw,3rem) clamp(1rem,4vw,2rem) 4rem;
+    display: flex; flex-direction: column; gap: clamp(1.5rem,3vw,2.25rem);
+  }
+  .eyebrow {
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin: 0;
+  }
+  h1 { font-size: clamp(1.7rem,4.5vw,2.6rem); line-height:1.1; letter-spacing:-.022em; margin:.4rem 0 .5rem; }
+  h2 { font-size: 1.12rem; letter-spacing:-.01em; margin:0 0 .25rem; }
+  .lede { color: var(--ink-2); max-width: 46rem; margin:0; }
+  .card {
+    background: var(--surface); border:1px solid var(--ring);
+    border-radius:14px; padding: clamp(1rem,2.4vw,1.6rem);
+  }
+  .sub { color: var(--muted); font-size:.85rem; margin:.15rem 0 1rem; }
+
+  /* --- KPIs --- */
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:.75rem; }
+  .kpi { background:var(--surface); border:1px solid var(--ring); border-radius:12px; padding:.9rem 1rem; }
+  .kpi .n { font-size:1.75rem; font-weight:650; letter-spacing:-.02em; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .kpi .k { font-size:.76rem; color:var(--muted); margin-top:.15rem; }
+
+  /* --- controles, todos numa linha acima dos graficos --- */
+  .controls { display:flex; flex-wrap:wrap; gap:.75rem 1.25rem; align-items:flex-end; margin-bottom:1.1rem; }
+  .ctl { display:flex; flex-direction:column; gap:.28rem; }
+  .ctl label { font-size:.72rem; color:var(--muted); font-weight:600; letter-spacing:.02em; }
+  select, button {
+    font:inherit; font-size:.86rem; color:var(--ink); background:var(--field);
+    border:1px solid var(--axis); border-radius:8px; padding:.4rem .6rem;
+  }
+  button { cursor:pointer; }
+  button[aria-pressed="true"] { background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  .seg { display:flex; gap:.3rem; }
+
+  /* --- seletor de series --- */
+  .picker { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+  .chip {
+    display:inline-flex; align-items:center; gap:.4rem; cursor:pointer;
+    border:1px solid var(--axis); border-radius:999px; padding:.28rem .7rem;
+    font-size:.8rem; color:var(--ink-2); background:var(--field); user-select:none;
+  }
+  .chip[data-on="1"] { color:var(--ink); border-color:currentColor; font-weight:600; }
+  .chip .dot { width:.6rem; height:.6rem; border-radius:50%; background:var(--axis); flex:none; }
+  .chip[data-on="1"] .dot { background:var(--c); }
+  .chip .u { color:var(--muted); font-weight:400; font-size:.72rem; }
+  .chip[aria-disabled="true"] { opacity:.42; cursor:not-allowed; }
+
+  /* --- grafico --- */
+  figure { margin:0; }
+  svg { display:block; width:100%; height:auto; overflow:visible; touch-action:pan-y; }
+  .gridline { stroke:var(--grid); stroke-width:1; }
+  .axisline { stroke:var(--axis); stroke-width:1; }
+  .tick { fill:var(--muted); font-size:11px; }
+  .lbl { font-size:11.5px; font-weight:650; }
+  .serie { fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .mk { stroke:var(--surface); stroke-width:2; }
+  .crosshair { stroke:var(--axis); stroke-width:1; stroke-dasharray:3 3; }
+  .hit { fill:transparent; }
+
+  .legend { display:flex; flex-wrap:wrap; gap:.25rem 1rem; margin:.7rem 0 0; padding:0; list-style:none; font-size:.8rem; color:var(--ink-2); }
+  .legend li { display:flex; align-items:center; gap:.4rem; }
+  .legend .dot { width:.65rem; height:.65rem; border-radius:50%; flex:none; }
+
+  .tip {
+    position:fixed; pointer-events:none; z-index:9; opacity:0; transition:opacity .1s;
+    background:var(--tip-bg); color:var(--tip-ink); border-radius:9px;
+    padding:.5rem .65rem; font-size:.78rem; line-height:1.45; min-width:9rem;
+    box-shadow:0 6px 20px rgba(0,0,0,.22);
+  }
+  .tip b { display:block; margin-bottom:.25rem; font-size:.8rem; }
+  .tip .row { display:flex; justify-content:space-between; gap:1rem; font-variant-numeric:tabular-nums; }
+  .tip .sw { width:.55rem; height:.55rem; border-radius:50%; display:inline-block; margin-right:.35rem; }
+
+  /* --- tabela gemea --- */
+  table { border-collapse:collapse; width:100%; font-size:.82rem; font-variant-numeric:tabular-nums; }
+  caption { text-align:left; color:var(--muted); font-size:.78rem; padding-bottom:.4rem; }
+  th, td { padding:.32rem .5rem; text-align:right; border-bottom:1px solid var(--grid); }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { color:var(--ink); font-weight:650; border-bottom-color:var(--axis); }
+  .tablewrap { overflow-x:auto; margin-top:.9rem; }
+  .na { color:var(--muted); }
+
+  /* --- matriz de cobertura --- */
+  .matrix { overflow-x:auto; }
+  .matrix table { font-size:.76rem; }
+  .matrix td.cell { text-align:center; padding:.2rem; }
+  .matrix .box { display:block; width:100%; height:1.1rem; border-radius:3px; background:var(--grid); }
+  .matrix .box[data-v="1"] { background:var(--s1); }
+  .matrix tr { cursor:pointer; }
+  .matrix tr:hover td { background:color-mix(in srgb, var(--s1) 8%, transparent); }
+  .matrix td:first-child { white-space:nowrap; max-width:16rem; overflow:hidden; text-overflow:ellipsis; }
+
+  .warn {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:1rem; height:1rem; border-radius:50%; flex:none;
+    background:var(--s4); color:#0b0b0b; font-size:.72rem; font-weight:700;
+  }
+  .note { font-size:.8rem; color:var(--muted); margin:.9rem 0 0; }
+  .note strong { color:var(--ink-2); }
+  footer { color:var(--muted); font-size:.78rem; border-top:1px solid var(--grid); padding-top:1rem; }
+  a { color:inherit; }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">SLU · Distrito Federal · 2014–2025</p>
+    <h1>O que o SLU mediu, ano a ano</h1>
+    <p class="lede">
+      Doze relatórios anuais de atividades, extraídos de 1.704 páginas de PDF e
+      validados por sobreposição. Escolha as séries, o período e a forma de
+      comparar — os números abaixo respondem à seleção.
+    </p>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="card">
+    <h2>Explorador da série</h2>
+    <p class="sub" id="explorer-sub"></p>
+
+    <div class="controls">
+      <div class="ctl">
+        <label for="de">De</label>
+        <select id="de"></select>
+      </div>
+      <div class="ctl">
+        <label for="ate">Até</label>
+        <select id="ate"></select>
+      </div>
+      <div class="ctl">
+        <label for="uni">Unidade</label>
+        <select id="uni"></select>
+      </div>
+      <div class="ctl">
+        <label>Escala</label>
+        <div class="seg">
+          <button id="m-abs" aria-pressed="true">Valor</button>
+          <button id="m-idx" aria-pressed="false">Índice 100</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Tabela</label>
+        <button id="m-tab" aria-pressed="false">Mostrar dados</button>
+      </div>
+    </div>
+
+    <div class="picker" id="picker"></div>
+
+    <figure>
+      <svg id="chart" viewBox="0 0 900 420" role="img" aria-labelledby="chart-desc"></svg>
+      <figcaption id="chart-desc" class="note"></figcaption>
+    </figure>
+    <ul class="legend" id="legend"></ul>
+    <div id="alertas"></div>
+    <div class="tablewrap" id="tabela" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2>O que cada relatório parou de contar</h2>
+    <p class="sub">
+      Cada linha é uma série; cada coluna, um ano. Bloco cheio significa que o
+      valor foi publicado naquele ano. Clique numa linha para levá-la ao gráfico acima.
+    </p>
+    <div class="matrix" id="matrix"></div>
+    <p class="note">
+      As faixas que terminam antes de <strong id="mx-fim"></strong> não são zeros —
+      são séries que os relatórios deixaram de publicar, sem nota explicativa.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Orçamento e taxa de limpeza</h2>
+    <p class="sub">LOA, despesa executada e receita da TLP — tudo em reais correntes, num eixo só.</p>
+    <figure>
+      <svg id="fin" viewBox="0 0 900 380" role="img" aria-labelledby="fin-desc"></svg>
+      <figcaption id="fin-desc" class="note"></figcaption>
+    </figure>
+    <ul class="legend" id="fin-legend"></ul>
+    <p class="note">
+      A despesa de <strong id="fin-parcial"></strong> não é plotada: no momento em que
+      o relatório saiu, a execução era parcial, e o ponto produziria uma queda falsa.
+    </p>
+  </section>
+
+  <footer>
+    Fonte: SLU/DF, relatórios anuais de atividades 2014–2025.
+    Extração, validação cruzada e código em <code>Relatorios_slu/</code>.
+    Valores em reais correntes, sem deflacionar.
+  </footer>
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const DADOS = __PAYLOAD__;
+
+const CORES = ['--s1','--s2','--s3','--s4'];
+const MAX = 4;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $ = s => document.querySelector(s);
+
+const nf = new Intl.NumberFormat('pt-BR', {maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('pt-BR', {maximumFractionDigits:1});
+const fmt = v => v == null ? '—' : (Math.abs(v) >= 1000 ? nf.format(v) : nf1.format(v));
+const fmtRS = v => v == null ? '—' : 'R$ ' + nf1.format(v/1e6) + ' mi';
+
+const estado = {
+  sel: [],
+  de: DADOS.anos[0],
+  ate: DADOS.anos[DADOS.anos.length-1],
+  uni: 'todas',
+  modo: 'abs',
+  tabela: false
+};
+
+/* series longas primeiro ja vem ordenado do payload */
+const porId = Object.fromEntries(DADOS.series.map(s => [s.id, s]));
+estado.sel = DADOS.series.slice(0,3).map(s => s.id);
+
+/* ---------- KPIs ---------- */
+/* Nenhum KPI aqui e uma variacao percentual. Toda variacao depende do ano-base
+   escolhido, e esta serie tem um vale profundo em 2020: ancorar um numero de
+   manchete nele diria "triplicou" sobre o que, em doze anos, cresceu 12%.
+   Quem quiser a variacao escolhe o periodo no explorador, vendo a base. */
+function kpis() {
+  const m = DADOS.meta;
+  const itens = [
+    [m.n_atividades,     'atividades medidas'],
+    [nf.format(m.n_pontos), 'valores publicados'],
+    [m.n_descontinuadas, 'atividades que os relatórios deixaram de contar'],
+    [m.n_divergentes,    'pontos em que os relatórios discordam entre si']
+  ];
+  $('#kpis').innerHTML = itens.map(([n,k]) =>
+    `<div class="kpi"><div class="n">${n}</div><div class="k">${k}</div></div>`).join('');
+}
+
+/* ---------- controles ---------- */
+function montaControles() {
+  const de = $('#de'), ate = $('#ate'), uni = $('#uni');
+  DADOS.anos.forEach(a => {
+    de.add(new Option(a, a, false, a === estado.de));
+    ate.add(new Option(a, a, false, a === estado.ate));
+  });
+  uni.add(new Option('todas', 'todas', false, true));
+  [...new Set(DADOS.series.map(s => s.unidade))].forEach(u =>
+    uni.add(new Option(DADOS.unidades[u] || u, u)));
+
+  de.onchange = () => { estado.de = +de.value; if (estado.de > estado.ate) { estado.ate = estado.de; ate.value = estado.ate; } render(); };
+  ate.onchange = () => { estado.ate = +ate.value; if (estado.ate < estado.de) { estado.de = estado.ate; de.value = estado.de; } render(); };
+  uni.onchange = () => { estado.uni = uni.value; montaPicker(); render(); };
+
+  $('#m-abs').onclick = () => { estado.modo = 'abs'; render(); };
+  $('#m-idx').onclick = () => { estado.modo = 'idx'; render(); };
+  $('#m-tab').onclick = () => { estado.tabela = !estado.tabela; render(); };
+}
+
+function visiveis() {
+  return DADOS.series.filter(s => estado.uni === 'todas' || s.unidade === estado.uni);
+}
+
+function montaPicker() {
+  const p = $('#picker');
+  p.innerHTML = visiveis().map(s => {
+    const on = estado.sel.includes(s.id);
+    const i = estado.sel.indexOf(s.id);
+    const cor = on ? css(CORES[i % MAX]) : 'var(--axis)';
+    const cheio = !on && estado.sel.length >= MAX;
+    const av = s.alerta ? `<span class="warn" title="${s.alerta}">!</span>` : '';
+    return `<span class="chip" data-id="${s.id}" data-on="${on?1:0}"
+      ${cheio?'aria-disabled="true"':''} style="--c:${cor}" role="button" tabindex="0">
+      <span class="dot"></span>${s.rotulo}<span class="u">${s.unidade}</span>${av}</span>`;
+  }).join('');
+  p.querySelectorAll('.chip').forEach(c => {
+    const alterna = () => {
+      const id = c.dataset.id, i = estado.sel.indexOf(id);
+      if (i >= 0) estado.sel.splice(i,1);
+      else if (estado.sel.length < MAX) estado.sel.push(id);
+      montaPicker(); render();
+    };
+    c.onclick = alterna;
+    c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(); } };
+  });
+}
+
+/* ---------- preparo dos dados ---------- */
+function preparar() {
+  const anos = DADOS.anos.filter(a => a >= estado.de && a <= estado.ate);
+  const idx = anos.map(a => DADOS.anos.indexOf(a));
+  return estado.sel.map((id, i) => {
+    const s = porId[id];
+    let vals = idx.map(k => s.valores[k]);
+    if (estado.modo === 'idx') {
+      const base = vals.find(v => v != null);
+      vals = base ? vals.map(v => v == null ? null : 100*v/base) : vals.map(() => null);
+    }
+    return { id, rotulo: s.rotulo, unidade: s.unidade, cor: css(CORES[i % MAX]), anos, vals };
+  });
+}
+
+/* ---------- grafico de linhas ---------- */
+function linhas(svgSel, series, anos, opts) {
+  const svg = $(svgSel);
+  const W = 900, H = opts.h || 420;
+  const m = { t: 14, r: opts.r ?? 150, b: 34, l: 62 };
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  const todos = series.flatMap(s => s.vals).filter(v => v != null);
+  if (!series.length || !todos.length) {
+    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" class="tick">Selecione ao menos uma série</text>`;
+    return;
+  }
+  let lo = Math.min(0, ...todos), hi = Math.max(...todos);
+  if (hi === lo) hi = lo + 1;
+  const pad = (hi - lo) * 0.08; hi += pad;
+
+  const x = i => m.l + (anos.length === 1 ? 0 : i * (W - m.l - m.r) / (anos.length - 1));
+  const y = v => H - m.b - (v - lo) / (hi - lo) * (H - m.t - m.b);
+
+  const ticks = 5, out = [];
+  for (let k = 0; k <= ticks; k++) {
+    const v = lo + (hi - lo) * k / ticks, yy = y(v);
+    out.push(`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${yy}" y2="${yy}"/>`);
+    out.push(`<text class="tick" x="${m.l-9}" y="${yy+4}" text-anchor="end">${opts.fy(v)}</text>`);
+  }
+  out.push(`<line class="axisline" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`);
+  anos.forEach((a,i) => {
+    if (anos.length > 8 && i % 2 && i !== anos.length-1) return;
+    out.push(`<text class="tick" x="${x(i)}" y="${H-m.b+18}" text-anchor="middle">${a}</text>`);
+  });
+
+  series.forEach(s => {
+    // quebra a linha onde o dado nao existe: buraco e informacao, nao zero
+    let d = '', abrir = true;
+    s.vals.forEach((v,i) => {
+      if (v == null) { abrir = true; return; }
+      d += (abrir ? 'M' : 'L') + x(i) + ' ' + y(v) + ' ';
+      abrir = false;
+    });
+    out.push(`<path class="serie" d="${d}" stroke="${s.cor}"/>`);
+    s.vals.forEach((v,i) => {
+      if (v == null) return;
+      out.push(`<circle class="mk" cx="${x(i)}" cy="${y(v)}" r="4.5" fill="${s.cor}"/>`);
+    });
+    // rotulo direto no ultimo ponto valido: a paleta clara tem cores abaixo de
+    // 3:1 de contraste, entao identidade nunca depende so da cor
+    let last = -1;
+    s.vals.forEach((v,i) => { if (v != null) last = i; });
+    if (last >= 0 && m.r > 40) {
+      out.push(`<text class="lbl" x="${x(last)+10}" y="${y(s.vals[last])+4}" fill="${s.cor}">${s.rotulo.slice(0,22)}</text>`);
+    }
+  });
+
+  out.push(`<line class="crosshair" id="${svgSel.slice(1)}-ch" x1="0" x2="0" y1="${m.t}" y2="${H-m.b}" style="opacity:0"/>`);
+  anos.forEach((a,i) => {
+    const w = (W - m.l - m.r) / Math.max(anos.length-1,1);
+    out.push(`<rect class="hit" x="${x(i)-w/2}" y="${m.t}" width="${w}" height="${H-m.t-m.b}" data-i="${i}"/>`);
+  });
+
+  svg.innerHTML = out.join('');
+
+  const ch = svg.querySelector(`#${svgSel.slice(1)}-ch`);
+  const tip = $('#tip');
+  svg.querySelectorAll('.hit').forEach(r => {
+    const mostra = ev => {
+      const i = +r.dataset.i;
+      ch.setAttribute('x1', x(i)); ch.setAttribute('x2', x(i)); ch.style.opacity = 1;
+      const linhas = series.map(s =>
+        `<div class="row"><span><span class="sw" style="background:${s.cor}"></span>${s.rotulo.slice(0,26)}</span><span>${opts.ft(s.vals[i])}</span></div>`
+      ).join('');
+      tip.innerHTML = `<b>${anos[i]}</b>${linhas}`;
+      tip.style.opacity = 1;
+      const p = ev.touches ? ev.touches[0] : ev;
+      tip.style.left = Math.min(p.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
+      tip.style.top  = Math.max(8, p.clientY - tip.offsetHeight - 12) + 'px';
+    };
+    r.addEventListener('mousemove', mostra);
+    r.addEventListener('touchstart', mostra, {passive:true});
+  });
+  svg.addEventListener('mouseleave', () => { tip.style.opacity = 0; ch.style.opacity = 0; });
+}
+
+/* ---------- tabela gemea ---------- */
+function tabela(series, anos, ft) {
+  if (!estado.tabela || !series.length) { $('#tabela').hidden = true; return; }
+  $('#tabela').hidden = false;
+  const cab = anos.map(a => `<th>${a}</th>`).join('');
+  const corpo = series.map(s => `<tr><td>${s.rotulo} <span class="na">(${s.unidade})</span></td>` +
+    s.vals.map(v => `<td${v==null?' class="na"':''}>${ft(v)}</td>`).join('') + '</tr>').join('');
+  $('#tabela').innerHTML =
+    `<table><caption>Os mesmos números do gráfico. Traço significa ano não publicado.</caption>
+     <thead><tr><th>Série</th>${cab}</tr></thead><tbody>${corpo}</tbody></table>`;
+}
+
+/* ---------- matriz de cobertura ---------- */
+function matriz() {
+  const cab = DADOS.anos.map(a => `<th>${String(a).slice(2)}</th>`).join('');
+  const linhas = DADOS.series.map(s => {
+    const cells = s.valores.map(v =>
+      `<td class="cell"><span class="box" data-v="${v==null?0:1}"></span></td>`).join('');
+    return `<tr data-id="${s.id}"><td title="${s.rotulo}">${s.rotulo} <span class="na">${s.unidade}</span></td>${cells}</tr>`;
+  }).join('');
+  $('#matrix').innerHTML =
+    `<table><thead><tr><th>Série</th>${cab}</tr></thead><tbody>${linhas}</tbody></table>`;
+  $('#matrix').querySelectorAll('tr[data-id]').forEach(tr => {
+    tr.onclick = () => {
+      const id = tr.dataset.id;
+      if (!estado.sel.includes(id)) {
+        if (estado.sel.length >= MAX) estado.sel.shift();
+        estado.sel.push(id);
+      }
+      estado.uni = 'todas'; $('#uni').value = 'todas';
+      montaPicker(); render();
+      $('#chart').scrollIntoView({behavior:'smooth', block:'center'});
+    };
+  });
+  $('#mx-fim').textContent = DADOS.meta.ano_fim;
+}
+
+/* ---------- financeiro ---------- */
+function financeiro() {
+  const f = DADOS.financeiro;
+  const series = [
+    { rotulo:'LOA',     unidade:'R$', cor:css('--s1'), vals:f.loa },
+    { rotulo:'Despesa', unidade:'R$', cor:css('--s2'), vals:f.despesa },
+    { rotulo:'TLP',     unidade:'R$', cor:css('--s4'), vals:f.tlp }
+  ];
+  linhas('#fin', series, f.anos, {
+    h:380, r:110,
+    fy: v => 'R$ ' + nf.format(v/1e6) + ' mi',
+    ft: fmtRS
+  });
+  $('#fin-legend').innerHTML = series.map(s =>
+    `<li><span class="dot" style="background:${s.cor}"></span>${s.rotulo}</li>`).join('');
+  $('#fin-parcial').textContent = DADOS.meta.despesa_parcial;
+  $('#fin-desc').textContent =
+    `LOA, despesa executada e receita da TLP entre ${f.anos[0]} e ${f.anos[f.anos.length-1]}, em reais correntes.`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  $('#m-abs').setAttribute('aria-pressed', estado.modo === 'abs');
+  $('#m-idx').setAttribute('aria-pressed', estado.modo === 'idx');
+  $('#m-tab').setAttribute('aria-pressed', estado.tabela);
+  $('#m-tab').textContent = estado.tabela ? 'Ocultar dados' : 'Mostrar dados';
+
+  const series = preparar();
+  const anos = DADOS.anos.filter(a => a >= estado.de && a <= estado.ate);
+  const unidades = [...new Set(series.map(s => s.unidade))];
+  const misto = unidades.length > 1;
+
+  // unidades diferentes nao dividem eixo. Em vez de eixo duplo, indice.
+  if (misto && estado.modo === 'abs') {
+    $('#explorer-sub').innerHTML =
+      `<strong>Séries em unidades diferentes (${unidades.join(', ')}).</strong> ` +
+      `Um eixo só não as compara — use <em>Índice 100</em>, ou filtre por unidade.`;
+  } else if (estado.modo === 'idx') {
+    $('#explorer-sub').textContent =
+      `Cada série vale 100 no seu primeiro ano publicado dentro do período. Compara ritmo, não tamanho.`;
+  } else {
+    $('#explorer-sub').textContent =
+      `Valores absolutos em ${DADOS.unidades[unidades[0]] || unidades[0] || '—'}.`;
+  }
+
+  const ft = estado.modo === 'idx' ? (v => v==null?'—':nf1.format(v)) : fmt;
+  const fy = ft;
+
+  linhas('#chart', misto && estado.modo === 'abs' ? [] : series, anos, {h:420, r:150, fy, ft});
+  tabela(series, anos, ft);
+
+  $('#legend').innerHTML = series.map(s =>
+    `<li><span class="dot" style="background:${s.cor}"></span>${s.rotulo} <span class="na">(${s.unidade})</span></li>`).join('');
+
+  const avisos = [...new Set(series.filter(s => porId[s.id].alerta).map(s => porId[s.id].alerta))];
+  $('#alertas').innerHTML = avisos.length
+    ? avisos.map(a => `<p class="note"><span class="warn">!</span> <strong>Atenção:</strong> ${a}. Confira o dicionário antes de citar o número.</p>`).join('')
+    : '';
+
+  $('#chart-desc').textContent = series.length
+    ? `${series.map(s=>s.rotulo).join(', ')}, de ${anos[0]} a ${anos[anos.length-1]}.` +
+      (estado.modo==='idx' ? ' Escala em índice, primeiro ano = 100.' : '')
+    : '';
+}
+
+kpis();
+montaControles();
+montaPicker();
+matriz();
+financeiro();
+render();
+addEventListener('resize', () => { render(); financeiro(); });
+</script>

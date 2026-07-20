@@ -1,0 +1,7 @@
+﻿MATRIZ DE RISCOS;;PROBABILIDADE (EVENTOS);;;;
+;;IMPROVÁVEL;RARO;POSSÍVEL;PROVÁVEL;QUASE CERTO
+Impacto;Catastrófico;2;-;--;--;2
+;Maior;1;2;4;2;3
+;Moderado;1;6;5;1;-
+;Menor;7;2;1;2;2
+;Desprezível;4;1;-;-;-

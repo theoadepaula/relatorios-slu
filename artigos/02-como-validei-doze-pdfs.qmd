@@ -1,0 +1,193 @@
+---
+title: "Como conferi 164 números sem confiar em mim mesmo"
+subtitle: "Um método de validação cruzada que nasceu de uma preguiça do próprio órgão publicador"
+date: today
+categories: [mão na massa, método, extração de dados, qualidade de dado]
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(arrow); library(dplyr)
+source(here::here("code", "tema_visual.R"))
+painel <- read_parquet(here::here("dados", "slu_painel.parquet"))
+serie  <- readr::read_csv2(here::here("dados", "slu_serie_historica.csv"))
+```
+
+Extrair tabela de PDF é uma das tarefas mais ingratas que existem. O texto sai na
+ordem errada, a célula vazia some, o número da página vira dado, e o pior: **o
+resultado parece certo.** Você recebe uma planilha bonita, com números
+plausíveis, e não tem contra o que conferir.
+
+Neste projeto eu tive sorte. O SLU me deu com o que conferir sem querer.
+
+## A preguiça que virou controle de qualidade
+
+Todo relatório anual do SLU republica a série histórica dos anos anteriores. O
+relatório de 2025 traz 2017 a 2025. O de 2022 traz 2017 a 2022. O de 2019 traz
+2017 a 2019.
+
+Do ponto de vista editorial, é repetição. Do meu ponto de vista, é uma dádiva:
+**o valor de 2017 aparece em nove relatórios diferentes.** Se meu extrator
+estiver certo, os nove têm que bater.
+
+```{r}
+#| label: tbl-sobreposicao
+#| echo: false
+
+painel |>
+  filter(n_fontes > 1) |>
+  count(n_fontes, name = "pontos") |>
+  arrange(desc(n_fontes)) |>
+  mutate(n_fontes = as.integer(n_fontes)) |>
+  tabela(
+    titulo    = "Quantos relatórios publicam o mesmo ponto",
+    subtitulo = "Só os pontos com mais de uma fonte independente"
+  ) |>
+  cols_label(n_fontes = "Relatórios que trazem o ponto", pontos = "Pontos") |>
+  # rampa sequencial de um tom so: da a forma da distribuicao sem gastar um
+  # grafico. Nada de grand_summary_rows aqui -- ele cria uma coluna-toco vazia
+  # a esquerda; o total cabe melhor na nota.
+  gt::data_color(columns = pontos, palette = c("#eef4fb", "#2a78d6"),
+                 alpha = 0.55) |>
+  tab_source_note(
+    paste0("Ao todo, ", sum(painel$n_fontes > 1),
+           " pontos podem ser conferidos contra pelo menos uma outra publicação.")
+  )
+```
+
+Isso transforma a pergunta impossível ("meu parser está certo?") numa pergunta
+respondível ("as fontes concordam?"). Não é a mesma pergunta — várias fontes
+podem repetir o mesmo erro de origem — mas pega quase tudo que um extrator erra,
+porque erro de parsing é idiossincrático: ele acontece num PDF e não no outro.
+
+## Os três erros que o método pegou
+
+São 164 pontos com mais de uma fonte. Na primeira rodada, várias dezenas
+discordavam — e as discordâncias se agrupavam em três padrões. Cada padrão era
+um bug.
+
+**1. O ano deslocado.** No relatório de 2017, o cabeçalho é
+`Unidade Ano 2015 Ano 2016 Ano 2017`, tudo numa linha. Só que o título da seção
+termina com "...na Execução dos Serviços – 2017". Meu detector de anos leu o
+2017 do título primeiro e montou a lista `[2017, 2015, 2016]`. Resultado: todos
+os valores daquele relatório entraram um ano fora do lugar.
+
+Sozinho, o relatório de 2017 parecia perfeito. Só a comparação com os outros oito
+denunciou: oito diziam que a varrição manual de 2017 foi 1.284.173 km, e o de
+2017 dizia 1.345.889 — que é, exatamente, o valor de 2015.
+
+**2. A tabela truncada.** A série histórica atravessa páginas. Eu cortava o bloco
+no primeiro marcador de página, o que fazia a tabela de 2019 e 2020 perder duas
+terças partes das linhas — 20 atividades viravam 3. Esse aqui a validação cruzada
+não precisou pegar: a contagem de linhas por relatório já denunciava.
+
+**3. O zero que virou número de página.** Este é o meu favorito, porque é o tipo
+de erro que sobrevive a qualquer revisão superficial. Eu descartava linhas com um
+a três dígitos, presumindo que fossem número de página. Só que o relatório de
+2019 usa `0` para "não medido" — enquanto os outros usam `-`. Então em toda linha
+que começava com zero, os valores subiam uma posição.
+
+O sintoma era discreto: o entulho aterrado na URE de 2018 saía como 1.423.028 t
+num relatório e 1.303.662 t em cinco outros. Uma diferença de 8%. Plausível
+demais para chamar atenção sozinha.
+
+## O que sobrou, e por que sobrou
+
+Depois das correções, restaram nove divergências em 164 pontos. Nenhuma é bug —
+mas elas são de dois tipos bem diferentes, e a tabela mistura os dois.
+
+```{r}
+#| label: tbl-divergencias
+#| echo: false
+
+painel |>
+  filter(divergencia_pct > 0) |>
+  select(ano, atividade_rotulo, unidade, divergencia_pct, n_fontes) |>
+  arrange(desc(divergencia_pct)) |>
+  mutate(ano = as.integer(ano), n_fontes = as.integer(n_fontes)) |>
+  tabela(
+    titulo    = "As divergências que sobraram",
+    subtitulo = "Mesma atividade, mesmo ano, mesma unidade — valores diferentes"
+  ) |>
+  cols_label(ano = "Ano", atividade_rotulo = "Atividade", unidade = "Unidade",
+             divergencia_pct = "Divergência", n_fontes = "Fontes") |>
+  fmt_integer(columns = ano, use_seps = FALSE) |>
+  fmt_number(columns = divergencia_pct, decimals = 2,
+             sep_mark = ".", dec_mark = ",", pattern = "{x}%") |>
+  cols_align("left", columns = c(atividade_rotulo, unidade)) |>
+  # as duas primeiras sao de outra natureza: o relatorio do proprio ano publica
+  # um numero e os seguintes revisam. Marcar evita ler tudo como ruido igual.
+  tab_style(style = cell_text(weight = "600"),
+            locations = cells_body(rows = divergencia_pct > 5)) |>
+  tab_style(style = cell_fill(color = "#eda100", alpha = 0.16),
+            locations = cells_body(rows = divergencia_pct > 5)) |>
+  tab_source_note(
+    "Em âmbar: revisão de exercício incompleto — o relatório do próprio ano publica um valor menor e os seguintes corrigem para cima."
+  )
+```
+
+Sete são **revisão miúda do próprio SLU**: o órgão publicou um número, no ano
+seguinte publicou outro ligeiramente diferente, e não avisou. Nenhuma passa de
+1,72%. É pouco, mas é real, e é por isso que o painel guarda qual relatório
+forneceu cada valor.
+
+As duas primeiras da tabela são outra coisa, e demoraram a fazer sentido para
+mim. Retirada de rejeitos das IRRs em 2020 sai como 9.649 no relatório de 2020 e
+como 3.517 em **cinco** relatórios posteriores. Lavagem de vias em 2019 sai como
+66,2 no relatório de 2019 e como 78,7 nos quatro seguintes.
+
+O padrão é o mesmo nos dois casos, e é sempre o relatório *do próprio ano* que
+destoa: o exercício ainda não fechou quando o relatório vai para a gráfica, e as
+edições seguintes corrigem. Não é discordância entre fontes — é a mesma fonte
+amadurecendo. Vale a regra prática: **para qualquer ano, prefira o relatório
+seguinte ao relatório daquele ano.** É o que a consolidação faz.
+
+## A categoria que não aparece como divergência
+
+Falta um terceiro tipo, e ele é invisível nessa tabela de propósito.
+
+Quatro atividades **trocam de unidade** no meio da série. Pintura de meios-fios
+sai de quilômetros para equipes. Coleta de animais mortos sai de unidades para
+toneladas. Lavagem de abrigos de passageiros, de unidades para equipes. E
+retirada de rejeitos das IRRs troca duas vezes: equipe, depois viagem, depois
+tonelada.
+
+Em nenhum dos quatro casos há um ano de corte limpo — as duas unidades convivem
+por dois ou três anos, porque cada relatório republica a série inteira com a
+unidade vigente na hora em que foi escrito.
+
+Isso não é valor discordante, é medida diferente com o mesmo nome — e somar as
+duas pontas produziria besteira. Por isso a unidade entrou na **chave** do
+painel: `(ano, atividade, unidade)`. A consequência é que uma troca de unidade
+nunca vira "divergência", ela vira duas séries distintas que simplesmente não se
+encostam. A tabela acima só mostra casos em que a unidade é a mesma e o número
+mudou mesmo assim.
+
+Foi uma decisão de modelagem, não um detalhe de implementação: se a unidade
+tivesse ficado fora da chave, essas quatro atividades apareceriam como os maiores
+erros do projeto, e eu teria passado dias caçando bug onde não havia.
+
+## O que eu levo disso
+
+Duas coisas.
+
+A primeira é que **eu não teria achado esses três bugs sozinho.** Nenhum deles
+gera número absurdo. Todos passam num teste de sanidade humano — "os valores
+parecem razoáveis?" — porque os valores *são* razoáveis, só estão na coluna
+errada.
+
+A segunda é que redundância em dado público costuma ser tratada como defeito. Um
+relatório que repete nove anos de série parece desperdício de página. Mas é essa
+repetição que torna o dado **verificável por terceiros** — e verificabilidade é
+uma propriedade rara, que quase sempre se perde quando um órgão "moderniza" a
+publicação e passa a divulgar só o ano corrente num dashboard.
+
+Se você trabalha num órgão que publica série histórica: republique os anos
+anteriores. Alguém lá fora vai usar isso para conferir você — e é bom que consiga.
+
+---
+
+*Todo o código está em [`code/`](../code); a base longa, com um registro por
+relatório de origem, em `dados/slu_serie_historica.csv`. Fonte primária:
+[relatórios anuais do SLU](https://www.slu.df.gov.br/relatorios).*

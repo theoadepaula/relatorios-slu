@@ -1,0 +1,14 @@
+﻿h - Material da Coleta Seletiva Processado nas três unidades do SLU;;;;;;
+PRODUTOS;RECICLAGEM - GERAL (t) - Ano 2014;;;;TOTAL RECICLADOS (t);TOTAL COMPOSTO (t)
+;NOUCE;NOSUL;NUDEF;Total;;
+Papel;858;192;40;1.090;21.051;54.054
+Papelão;2.186;312;778;3.275;;
+Plástico;3.624;1.270;8.987;13.881;;
+Lata prensada;0;0;0;0;;
+Sucata;917;134;1.332;2.383;;
+Alumínio;210;185;5;400;;
+Composto Orgânico;35.870;18.184;0;54.054;;
+Rec. Condomínio;;;22;22;;
+Rejeito;129.036;30.570;0;159.607;;
+Processado;169.594;50.862;11.164;231.620;;
+Lixo particular (não processado);3.107;Processado = soma (composto + rejeito + reciclado) - lixo particular não processado;;;;
