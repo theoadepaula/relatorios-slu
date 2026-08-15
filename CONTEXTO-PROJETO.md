@@ -50,6 +50,24 @@ decisões administrativas. Manter assim.
   Quadro completo em `docs/CONTEXTO-SITE.md`, seção 9.2.
 - **Paleta reaproveitada do painel**, validada para daltonismo nos modos claro e
   escuro. Não trocar cor no olho.
+- ✅ **Decidido em 2026-08-15:** os artigos passam a pedir ao `theoviz` o **modo
+  escuro** — `paleta(modo = "escuro")`, `tinta(..., modo = "escuro")` e
+  `tabela()` com `modo = "escuro"`. Eles sempre foram publicados em página
+  escura e pediam as cores do modo claro; sem `modo`, o `gt` crava
+  `background-color: #FFFFFF` **inline**, que nenhuma folha de estilo derruba, e
+  toda tabela de todo artigo ia ao ar como retângulo branco.
+  - Saiu junto o `TINTA_2 <- "#8a8a85"` que este projeto cravava. O comentário
+    que o defendia — *"não é o `tinta('fraca')` do theoviz: aquele foi calibrado
+    só para fundo claro"* — era **verdade quando foi escrito** e deixou de ser:
+    o `theoviz` 0.3.0 tem um piso próprio para o escuro (`#7d858e`), medido
+    contra o fundo e contra a chapa. Cinza inventado no projeto é exatamente a
+    divergência que o pacote existe para eliminar.
+  - `GRADE` passa de `grade_rgba(0.22)` para o filete sólido. O `rgba` é o
+    recurso de **chão desconhecido**; aqui o chão é conhecido.
+  - Exige `theoviz` ≥ 0.3.0. Depois de mexer no tema, re-renderizar **tudo** no
+    repo do site: apagar `quarto/_freeze/` e rodar `npm run build:quarto`
+    (`quarto render --no-freeze` **não existe** no Quarto 1.9 — falha o render
+    inteiro).
 - No artigo 03, os dois trechos da série entram como **traces separados**: ligá-los
   com linha contínua afirmaria visualmente a continuidade que o texto nega.
 
