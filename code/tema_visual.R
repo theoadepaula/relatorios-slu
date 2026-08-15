@@ -5,7 +5,7 @@
 #
 # A paleta e a MESMA do painel (painel/index.html), e passou no validador de
 # daltonismo nos modos claro e escuro. Nao troque cor no olho: rode
-#   node scripts/validate_palette.js "#2a78d6,#008300" --mode light --surface "#fcfcfb"
+#   node scripts/validate_palette.js "#3987e5,#008300" --mode dark --surface "#0d1014"
 # do skill dataviz antes de mexer.
 
 suppressPackageStartupMessages({
@@ -22,19 +22,37 @@ suppressPackageStartupMessages({
 # s1 azul, s2 verde, s3 rosa, s4 ambar. Ordem fixa: serie 1 sempre s1, etc.
 # Nunca cicle -- uma 5a serie vira facetas ou "outros", nao uma cor nova.
 # As cores vem do theoviz; o nome local CORES e preservado para os .qmd.
-CORES <- paleta()
+#
+# MODO ESCURO (2026-08-15) ----------------------------------------------------
+# Os artigos deste projeto sao publicados em pagina escura -- sempre foram -- e
+# ate aqui pediam ao theoviz as cores do modo CLARO. Passam a pedir o escuro.
+# Contra o chao do site (#0d1014) os quatro slots medem 5,24 / 3,86 / 4,83 e
+# 6,21 -- todos acima do piso de 3:1.
+CORES <- paleta(modo = "escuro")
 
-# Cinza medio proposital: os graficos usam fundo TRANSPARENTE para herdar a cor
-# da pagina, entao o texto de eixo precisa passar em contraste tanto sobre
-# claro (#fcfcfb) quanto sobre escuro (#1a1a19). Este tom passa nos dois.
-# Nao e o `tinta("fraca")` do theoviz: aquele foi calibrado so para fundo claro.
-TINTA_2 <- "#8a8a85"
-GRADE   <- grade_rgba(0.22)
+# Este arquivo cravava um `TINTA_2 <- "#8a8a85"` proprio, com o comentario "nao
+# e o tinta('fraca') do theoviz: aquele foi calibrado so para fundo claro". Era
+# verdade, e deixou de ser: desde a 0.3.0 o theoviz tem um piso proprio para o
+# escuro (#7d858e, o `rotulo` do sistema visual do site), medido contra o fundo
+# E contra a chapa. Um cinza inventado aqui era exatamente a divergencia que o
+# pacote existe para eliminar.
+TINTA_2 <- tinta("fraca", modo = "escuro")
+
+# Grade solida, nao rgba. O `grade_rgba()` e o recurso de CHAO DESCONHECIDO:
+# serve quando a figura nao sabe sobre o que vai pousar. Aqui sabe -- a pagina
+# do artigo e escura --, e o filete do site e o traco certo.
+GRADE   <- tinta("grade", modo = "escuro")
 
 # --- gt ---------------------------------------------------------------------
 # `tabela()` e so o nome local do tema canonico -- mantido para nao mexer nos
 # .qmd. A tabela e o "par acessivel" do grafico: quando a cor falha, ela responde.
-tabela <- tabela_gt
+#
+# O `modo = "escuro"` nao e detalhe: sem ele o gt crava `background-color:
+# #FFFFFF` inline, e nenhuma folha de estilo derruba estilo inline. Toda tabela
+# destes artigos ia ao ar como um retangulo branco no meio da pagina escura. No
+# escuro a tabela e transparente e pousa na pagina -- a mesma escolha que o
+# `grafico()` abaixo ja fazia com `paper_bgcolor`.
+tabela <- function(...) tabela_gt(..., modo = "escuro")
 
 # --- plotly -----------------------------------------------------------------
 # Fundo transparente de proposito (ver TINTA_2). hovermode "x unified" e o que
